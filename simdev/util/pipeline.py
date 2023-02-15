@@ -17,13 +17,12 @@ class Pipeline:
             try:
                 stage.run(self)
             except PipelineException as e:
-                logging.error('Blocking issue is observed executing the pipeline:', e, file=sys.stderr)
-                logging.error('Order:', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])), file=sys.stderr)
+                logging.error('Blocking issue is observed executing the pipeline: %s', e)
+                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])))
             except Exception as e:
                 logging.error('An unexpected failure occurred executing the pipeline. Please, refer to the '
-                                'following details',
-                                file=sys.stderr)
-                logging.error('Order:', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])), file=sys.stderr)
+                              'following details')
+                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])))
                 raise e
             self.pastStages += [stage]
 
