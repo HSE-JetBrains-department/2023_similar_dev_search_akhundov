@@ -12,19 +12,19 @@ from simdev.util.utils import truncate
 
 
 class AuthorCompound:
-    def __init__(self, username, email):
-        self.username = username
+    def __init__(self, name, email):
+        self.name = name
         self.email = email
 
     def __repr__(self) -> str:
-        return "%s <%s>" % (self.username, self.email)
+        return "%s <%s>" % (self.name, self.email)
 
     def __hash__(self) -> int:
-        return hash((self.username, self.email))
+        return hash((self.name, self.email))
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, AuthorCompound):
-            return (self.username, self.email) == (o.username, o.email)
+            return (self.name, self.email) == (o.name, o.email)
         return False
 
 

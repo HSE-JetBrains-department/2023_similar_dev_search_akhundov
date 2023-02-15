@@ -17,4 +17,4 @@ if __name__ == "__main__":
             print(' %s' % contributor)
             for filename, file_context in contributor_context.files.items():
                 print('  %s -- +%s -%s (total changed=%s)' % (filename, file_context.added_lines,
-                             file_context.deleted_lines, file_context.changed_lines))
+                                                              file_context.deleted_lines, file_context.changed_lines))
