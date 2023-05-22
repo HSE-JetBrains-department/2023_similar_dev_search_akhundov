@@ -17,11 +17,14 @@ class PipelineException(Exception):
 
 class Pipeline:
     def __init__(self):
-        self.stages = []
-        self.pastStages = []
-        self.currentStage = None
+        self.stages: list[Stage] = []
+        self.past_stages: list[Stage] = []
+        self.current_stage = None
 
     def run(self):
+        """
+        Run all the stages in the pipeline
+        """
         logging.info('Pipeline structure: ' + ' -> '.join(map(lambda element: element.name, self.stages)))
         for stage in self.stages:
             logging.info('Running: ' + stage.name)
@@ -29,18 +32,24 @@ class Pipeline:
                 stage.run(self)
             except PipelineException as e:
                 logging.error('Blocking issue is observed executing the pipeline: %s', e)
-                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])))
+                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.past_stages + [stage])))
+                raise e
             except Exception as e:
                 logging.error('An unexpected failure occurred executing the pipeline. Please, refer to the '
                               'following details')
-                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.pastStages + [stage])))
+                logging.error('Order: %s', ' -> '.join(map(lambda past: past.name, self.past_stages + [stage])))
                 raise e
-            self.pastStages += [stage]
+            self.past_stages.append(stage)
 
     def append(self, stage):
-        self.stages += [stage]
+        self.stages.append(stage)
 
     def get_stage_context(self, stage_type: type):
+        """
+        Get stage's context that stores arbitrary information supplied/produced
+        :param stage_type: type of the stage to get the context of
+        :return: context if any
+        """
         for stage in self.stages:
             if isinstance(stage, stage_type):
                 return stage.context
@@ -53,13 +62,23 @@ class Stage(ABC, Generic[T]):
     @property
     @abstractmethod
     def context(self):
-        pass
+        """
+        Context object of the stage
+        """
+        raise NotImplemented("Context is not implemented")
 
     @property
     @abstractmethod
     def name(self):
-        pass
+        """
+        Name of the stage
+        """
+        raise NotImplemented("Name is not implemented")
 
     @abstractmethod
     def run(self, pipeline: Pipeline):
-        pass
+        """
+        Method that embodies stage's logic: execution happens here
+        :param pipeline: pipeline inside which a stage is run
+        """
+        raise NotImplemented("Run is not implemented")

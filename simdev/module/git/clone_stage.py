@@ -27,10 +27,8 @@ class AuthorCompound:
     def __hash__(self) -> int:
         return hash((self.name, self.email))
 
-    def __eq__(self, o: object) -> bool:
-        if isinstance(o, AuthorCompound):
-            return (self.name, self.email) == (o.name, o.email)
-        return False
+    def __eq__(self, o: "AuthorCompound") -> bool:
+        return (self.name, self.email) == (o.name, o.email)
 
 
 class FileContext:
@@ -49,12 +47,12 @@ class FileContext:
 
 class ContributorContext:
     """
-    Context that embodies the author and the set of files that are being changed by them
+    Context that embodies the author and the set of files that are being changed by them per specific repository
     """
 
     def __init__(self, author: AuthorCompound):
         self.author = author
-        self.files: dict[FileContext] = {}
+        self.files: dict[str, FileContext] = {}
 
     def __repr__(self) -> str:
         """
@@ -73,7 +71,6 @@ class RepositoryContext:
         self.url = url
         self.repository: RepositoryContext | None = None
         self.contributors: dict[AuthorCompound] = {}
-        self.excluded: bool = False
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, RepositoryContext):
@@ -92,7 +89,9 @@ class CloneContext:
     def fulfil_repository_info(self):
         """
         Fill in the info about repository (and its context)
+        :return list of excluded repos
         """
+        excluded_repos = []
         for repo_context in self.repositories:
             try:
                 repo_context.repository = Repository(repo_context.url, num_workers=os.cpu_count())
@@ -112,7 +111,8 @@ class CloneContext:
                 logging.warning('Failed to clone, skipping %s: %s ==> %s', repo_context.url,
                                 '\"{0}\"'.format(' '.join(e.command)),
                                 e.stderr.replace('\n', '\t'))
-                repo_context.excluded = True
+                excluded_repos += [repo_context]
+            return excluded_repos
 
 
 class CloneStage(Stage[CloneContext]):
@@ -126,8 +126,9 @@ class CloneStage(Stage[CloneContext]):
     def run(self, pipeline: Pipeline):
         if len(self._context.repositories) == 0:
             raise PipelineException("An empty list of repositories is provided")
-        self._context.fulfil_repository_info()
-        self._context.repositories = [context for context in self._context.repositories if not context.excluded]
+        excluded_contexts = self._context.fulfil_repository_info()
+        self._context.repositories = [context for context in self._context.repositories if
+                                      context not in excluded_contexts]
 
     @property
     def context(self):
