@@ -4,8 +4,7 @@ from multiprocessing import Pool
 from tqdm import tqdm
 
 from simdev.module.git.github_api_wrapper import GithubApiWrapper
-from simdev.util.pipeline import Pipeline
-from simdev.util.stage import Stage
+from simdev.util.pipeline import Pipeline, Stage
 
 GATHER_POPULAR_REPOS_SAVE_FILENAME = 'gather_popular_repos_stage.json'
 STARGAZERS_SAVE_FILENAME_TEMPLATE = 'stargazers/{}.json'

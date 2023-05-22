@@ -1,6 +1,5 @@
 import unittest
 
-from simdev.module.git.clone_stage import CloneStage, CloneContext
 from simdev.module.github.gather_popular_repos_stage import GatherPopularReposStage, PopularReposContext
 from simdev.util.pipeline import Pipeline
 

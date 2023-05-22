@@ -1,6 +1,7 @@
 import logging
 from abc import ABC, ABCMeta, abstractmethod
-from typing import Generic, List, TypeVar
+from typing import Generic, TypeVar
+from typing import List
 
 T = TypeVar("T")
 
