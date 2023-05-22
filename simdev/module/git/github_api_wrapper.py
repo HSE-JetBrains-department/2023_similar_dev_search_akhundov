@@ -9,21 +9,30 @@ starred_response_type = list[dict[str]] | dict[str] | None
 
 
 class GithubApiWrapper:
-    def __init__(self, api_tokens: list[str] = None, github_api_url="https://api.github.com/", max_retries_num=1000):
-        self._batch_count = 60
-        self._api_url = github_api_url
-        self._max_retries_num = max_retries_num
+    """
+    Wrapper for GitHub API to fetch stargazers and starred repos utilizing retries and personal access tokens
+    """
 
-        self._headers = {
+    def __init__(self,
+                 api_tokens: list[str] = None,
+                 github_api_url: str = "https://api.github.com/",
+                 max_retries_num: int = 1000):
+        self._api_url: str = github_api_url
+        self._max_retries_num: int = max_retries_num
+
+        self._headers: dict[str] = {
             'Accept': 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28'
         }
 
-        self._api_tokens = api_tokens
-        self._current_api_token = None
+        self._api_tokens: list[str] = api_tokens
+        self._current_api_token: str | None = None
         self._update_api_token()
 
     def _update_api_token(self):
+        """
+        Switch to using another GitHub API token if possible
+        """
         if self._api_tokens is None:
             return
         if len(self._api_tokens) == 0:
@@ -40,6 +49,11 @@ class GithubApiWrapper:
             self._headers.update({'Authorization': 'Bearer ' + self._current_api_token})
 
     def _get_request_json(self, url):
+        """
+        Send GET request and retrieve a response as json
+        :param url: to send a request to
+        :return: json response
+        """
         retries = Retry(total=self._max_retries_num, backoff_factor=1)
         session = requests.Session()
         session.headers = self._headers
@@ -48,11 +62,19 @@ class GithubApiWrapper:
         while result is None:
             try:
                 result = session.get(url).json()
-            except Exception:
+            except:
                 continue
         return result
 
     def fetch_stargazers(self, repo: str, batch_count=100, page_limit=400, progress=None) -> set[str]:
+        """
+        Fetch stargazers of the repository
+        :param repo: name (GitHub flavoured. Example: theseems/HseNotebooks)
+        :param batch_count: entries per GitHub API response page
+        :param page_limit: max amount of pages to fetch
+        :param progress: TQDM progress if any
+        :return: set of stargazers
+        """
         if progress is not None:
             progress.desc = 'Fetching stargazers for ' + repo
 
@@ -82,6 +104,14 @@ class GithubApiWrapper:
         return result
 
     def fetch_starred_repositories(self, user, batch_count=100, page_limit=400, progress=None) -> set[str]:
+        """
+        Fetch repositories starred by a user
+        :param user: to fetch starred repositories of
+        :param batch_count: number of entries per GitHub API response's page
+        :param page_limit: max amount of pages to fetch
+        :param progress: TQDM progress
+        :return: set of starred repositories
+        """
         if progress is not None:
             progress.desc = 'Fetching starred repositories of ' + user
 

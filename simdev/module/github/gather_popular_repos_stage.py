@@ -11,7 +11,11 @@ STARGAZERS_SAVE_FILENAME_TEMPLATE = 'stargazers/{}.json'
 STARRED_SAVE_FILENAME_TEMPLATE = 'starred/{}.json'
 
 
-class StargazerContext:
+class StargazersContext:
+    """
+    Context for storing info about repository's stargazers
+    """
+
     def __init__(self, repo: str, page_limit: int):
         self.repo = repo
         self.page_limit = page_limit
@@ -37,10 +41,14 @@ class StargazerContext:
 
 
 class StarredReposContext:
+    """
+    Context for storing starred repositories of a user
+    """
+
     def __init__(self, user: str, page_limit: int):
         self.user = user
         self.page_limit = page_limit
-        self.repos = []
+        self.repos: set[str] = set()
 
     def recover(self):
         def hook(rec):
@@ -62,6 +70,10 @@ class StarredReposContext:
 
 
 class PopularReposContext:
+    """
+    Context for storing info about repos that are popular among certain repo(-s') stargazers
+    """
+
     def __init__(self,
                  source_repositories: list[str],
                  max_popular_repos_num: int,
@@ -94,6 +106,9 @@ class PopularReposContext:
 
 
 class GatherPopularReposStage(Stage[PopularReposContext]):
+    """
+    Stage for gathering popular repositories among stargazers of source repositories
+    """
 
     @property
     def name(self):
@@ -104,6 +119,11 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         self._api_wrapper = GithubApiWrapper(api_tokens=context.api_tokens)
 
     def _process_stargazer(self, stargazer):
+        """
+        Process single stargazer: fetch starred repos and taking them into account
+        :param stargazer: user to process
+        :return: user alongside with their starred repos
+        """
         starred_context = StarredReposContext(user=stargazer, page_limit=self._context.page_limit)
         if starred_context.recover() is None:
             starred_context.repos = self._api_wrapper.fetch_starred_repositories(
@@ -128,7 +148,7 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         accounted_stargazers = set()
 
         for source_repo in source_tqdm:
-            stargazers_context = StargazerContext(source_repo, self._context.page_limit)
+            stargazers_context = StargazersContext(source_repo, self._context.page_limit)
             if stargazers_context.recover() is None:
                 stargazers_context.stargazers = self._api_wrapper.fetch_stargazers(repo=source_repo,
                                                                                    progress=source_tqdm,
