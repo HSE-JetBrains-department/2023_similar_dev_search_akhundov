@@ -108,14 +108,16 @@ class CloneContext:
                         file_context.added_lines += file.added_lines
                         file_context.deleted_lines += file.deleted_lines
             except GitCommandError as e:
-                logging.warning('Failed to clone, skipping %s: %s ==> %s', repo_context.url,
-                                '\"{0}\"'.format(' '.join(e.command)),
-                                e.stderr.replace('\n', '\t'))
+                logging.warning(F"Failed to clone, skipping {repo_context.url}: {' '.join(e.command)} ==> {e.stderr}")
                 excluded_repos += [repo_context]
             return excluded_repos
 
 
 class CloneStage(Stage[CloneContext]):
+    """
+    Stage to clone git repositories and count changed files for their contributors
+    """
+
     @property
     def name(self):
         return "Git Clone"
@@ -124,11 +126,14 @@ class CloneStage(Stage[CloneContext]):
         self._context = context
 
     def run(self, pipeline: Pipeline):
+        """
+        Fulfill info about repositories and exclude faulty ones
+        """
         if len(self._context.repositories) == 0:
             raise PipelineException("An empty list of repositories is provided")
         excluded_contexts = self._context.fulfil_repository_info()
-        self._context.repositories = [context for context in self._context.repositories if
-                                      context not in excluded_contexts]
+        self._context.repositories = [context for context in self._context.repositories
+                                      if context not in excluded_contexts]
 
     @property
     def context(self):
