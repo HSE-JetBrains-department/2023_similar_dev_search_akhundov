@@ -1,22 +1,27 @@
 import logging
 import os
+import textwrap
 
 from git import GitCommandError
 from pydriller import Repository
 from tqdm import tqdm
 
-from simdev.util.pipeline import Pipeline
-from simdev.util.pipeline_exception import PipelineException
-from simdev.util.stage import Stage
-from simdev.util.utils import truncate
+from simdev.util.pipeline import Pipeline, Stage, PipelineException
 
 
 class AuthorCompound:
-    def __init__(self, name, email):
+    """
+    A simple structure that embodies both author's email and name
+    """
+
+    def __init__(self, name: str, email: str):
         self.name = name
         self.email = email
 
     def __repr__(self) -> str:
+        """
+        :return: info about a contributor
+        """
         return "%s <%s>" % (self.name, self.email)
 
     def __hash__(self) -> int:
@@ -29,30 +34,46 @@ class AuthorCompound:
 
 
 class FileContext:
-    def __init__(self, added_lines, deleted_lines):
+    """
+    Context that embodies the change inside a file: added and deleted lines
+    """
+
+    def __init__(self, added_lines: int = 0, deleted_lines: int = 0):
         self.added_lines = added_lines
         self.deleted_lines = deleted_lines
 
     @property
-    def changed_lines(self):
+    def changed_lines(self) -> int:
         return self.added_lines + self.deleted_lines
 
 
 class ContributorContext:
+    """
+    Context that embodies the author and the set of files that are being changed by them
+    """
+
     def __init__(self, author: AuthorCompound):
         self.author = author
-        self.files = {}
+        self.files: dict[FileContext] = {}
 
     def __repr__(self) -> str:
-        return repr(self.files)
+        """
+        :return: info about changed files
+        """
+        return "%s: %s" % (repr(self.author), repr(self.files))
 
 
 class RepositoryContext:
-    def __init__(self, url):
+    """
+    Context that embodies a repository alongside with their contributors' contexts and whether this repository is
+    excluded from further consideration or not due to any reasons
+    """
+
+    def __init__(self, url: str):
         self.url = url
-        self.repository = None
-        self.contributors = {}
-        self.excluded = False
+        self.repository: RepositoryContext | None = None
+        self.contributors: dict[AuthorCompound] = {}
+        self.excluded: bool = False
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, RepositoryContext):
@@ -61,28 +82,37 @@ class RepositoryContext:
 
 
 class CloneContext:
+    """
+    Context of the clone stage that embodies contexts of considered repositories
+    """
+
     def __init__(self, repository_urls: list[str]):
         self.repositories = [RepositoryContext(url) for url in repository_urls]
 
-
-def _fulfil_repository_info(repo_context: RepositoryContext):
-    try:
-        repo_context.repository = Repository(repo_context.url, num_workers=os.cpu_count())
-        commits = tqdm(repo_context.repository.traverse_commits(), desc=repo_context.url)
-        for commit in commits:
-            author = AuthorCompound(commit.author.name, commit.author.email)
-            for file in commit.modified_files:
-                commits.set_postfix_str(
-                    'Commit \'%s\', file \'%s\'' % (truncate(commit.msg.split('\n')[0]), truncate(file.filename)))
-                context = repo_context.contributors.setdefault(author, ContributorContext(author))
-                file_context = context.files.setdefault(file.filename, FileContext(0, 0))
-                file_context.added_lines += file.added_lines
-                file_context.deleted_lines += file.deleted_lines
-    except GitCommandError as e:
-        logging.warning('Failed to clone, skipping %s: %s ==> %s', repo_context.url,
-                        '\"{0}\"'.format(' '.join(e.command)),
-                        e.stderr.replace('\n', '\t'))
-        repo_context.excluded = True
+    def fulfil_repository_info(self):
+        """
+        Fill in the info about repository (and its context)
+        """
+        for repo_context in self.repositories:
+            try:
+                repo_context.repository = Repository(repo_context.url, num_workers=os.cpu_count())
+                commits = tqdm(repo_context.repository.traverse_commits(), desc=repo_context.url)
+                for commit in commits:
+                    author = AuthorCompound(commit.author.name, commit.author.email)
+                    for file in commit.modified_files:
+                        commits.set_postfix_str(
+                            'Commit \'%s\', file \'%s\'' % (
+                                textwrap.shorten(commit.msg.split('\n')[0], width=40),
+                                textwrap.shorten(file.filename, width=40)))
+                        context = repo_context.contributors.setdefault(author, ContributorContext(author))
+                        file_context = context.files.setdefault(file.filename, FileContext())
+                        file_context.added_lines += file.added_lines
+                        file_context.deleted_lines += file.deleted_lines
+            except GitCommandError as e:
+                logging.warning('Failed to clone, skipping %s: %s ==> %s', repo_context.url,
+                                '\"{0}\"'.format(' '.join(e.command)),
+                                e.stderr.replace('\n', '\t'))
+                repo_context.excluded = True
 
 
 class CloneStage(Stage[CloneContext]):
@@ -96,8 +126,7 @@ class CloneStage(Stage[CloneContext]):
     def run(self, pipeline: Pipeline):
         if len(self._context.repositories) == 0:
             raise PipelineException("An empty list of repositories is provided")
-        for context in self._context.repositories:
-            _fulfil_repository_info(context)
+        self._context.fulfil_repository_info()
         self._context.repositories = [context for context in self._context.repositories if not context.excluded]
 
     @property

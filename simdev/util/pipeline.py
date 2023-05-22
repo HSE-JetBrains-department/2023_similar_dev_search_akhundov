@@ -1,7 +1,18 @@
 import logging
-import sys
 
-from simdev.util.pipeline_exception import PipelineException
+from abc import ABC, abstractmethod, ABCMeta
+from typing import TypeVar, Generic
+
+T = TypeVar("T")
+
+
+class PipelineException(Exception):
+    """
+    Raised when a deliberate inconsistency is observed in a pipeline.
+    This exception is unique compared to others, as it is used to inform the user about their inconsistent input
+    or when any predictable pipeline-blocking situation is observed
+    """
+    pass
 
 
 class Pipeline:
@@ -11,9 +22,9 @@ class Pipeline:
         self.currentStage = None
 
     def run(self):
-        print('Pipeline structure:', ' -> '.join(map(lambda element: element.name, self.stages)))
+        logging.info('Pipeline structure: ' + ' -> '.join(map(lambda element: element.name, self.stages)))
         for stage in self.stages:
-            print('Running:', stage.name)
+            logging.info('Running: ' + stage.name)
             try:
                 stage.run(self)
             except PipelineException as e:
@@ -34,3 +45,21 @@ class Pipeline:
             if isinstance(stage, stage_type):
                 return stage.context
         return None
+
+
+class Stage(ABC, Generic[T]):
+    __metaclass__ = ABCMeta
+
+    @property
+    @abstractmethod
+    def context(self):
+        pass
+
+    @property
+    @abstractmethod
+    def name(self):
+        pass
+
+    @abstractmethod
+    def run(self, pipeline: Pipeline):
+        pass
