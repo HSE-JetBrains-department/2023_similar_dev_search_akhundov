@@ -1,6 +1,9 @@
+import hashlib
+import json
 import logging
 import os
 import textwrap
+from collections import defaultdict
 
 from git import GitCommandError
 from pydriller import Repository
@@ -25,7 +28,7 @@ class AuthorCompound:
         return "%s <%s>" % (self.name, self.email)
 
     def __hash__(self) -> int:
-        return hash((self.name, self.email))
+        return int.from_bytes(hashlib.sha256(repr(self).encode('utf-8')).digest(), 'big')
 
     def __eq__(self, o: "AuthorCompound") -> bool:
         return (self.name, self.email) == (o.name, o.email)
@@ -52,7 +55,7 @@ class ContributorContext:
 
     def __init__(self, author: AuthorCompound):
         self.author = author
-        self.files: dict[str, FileContext] = {}
+        self.files: dict[str, FileContext] = defaultdict(lambda: FileContext())
 
     def __repr__(self) -> str:
         """
@@ -69,13 +72,24 @@ class RepositoryContext:
 
     def __init__(self, url: str):
         self.url = url
-        self.repository: RepositoryContext | None = None
         self.contributors: dict[AuthorCompound] = {}
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, RepositoryContext):
             return self.url == o.url
         return False
+
+    def __iter__(self):
+        yield from {
+            "url": self.url,
+            "contributors": list(map(repr, self.contributors))
+        }.items()
+
+    def __repr__(self):
+        return json.dumps(dict(self), ensure_ascii=False)
+
+    def __hash__(self) -> int:
+        return int.from_bytes(hashlib.sha256(repr(self).encode('utf-8')).digest(), 'big')
 
 
 class CloneContext:
@@ -91,7 +105,7 @@ class CloneContext:
         Fill in the info about repository (and its context)
         :return list of excluded repos
         """
-        excluded_repos = []
+        excluded_repos: set[RepositoryContext] = set()
         for repo_context in self.repositories:
             try:
                 repo_context.repository = Repository(repo_context.url, num_workers=os.cpu_count())
@@ -104,12 +118,12 @@ class CloneContext:
                                 textwrap.shorten(commit.msg.split('\n')[0], width=40),
                                 textwrap.shorten(file.filename, width=40)))
                         context = repo_context.contributors.setdefault(author, ContributorContext(author))
-                        file_context = context.files.setdefault(file.filename, FileContext())
+                        file_context = context.files[file.filename]
                         file_context.added_lines += file.added_lines
                         file_context.deleted_lines += file.deleted_lines
             except GitCommandError as e:
                 logging.warning(F"Failed to clone, skipping {repo_context.url}: {' '.join(e.command)} ==> {e.stderr}")
-                excluded_repos += [repo_context]
+                excluded_repos.add(repo_context)
             return excluded_repos
 
 
