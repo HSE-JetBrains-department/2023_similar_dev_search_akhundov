@@ -42,6 +42,10 @@ class Pipeline:
             self.past_stages.append(stage)
 
     def append(self, stage):
+        """
+        Append stage to the pipeline
+        :param stage: to add
+        """
         self.stages.append(stage)
 
     def get_stage_context(self, stage_type: type):

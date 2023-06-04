@@ -3,35 +3,18 @@ import json
 import logging
 import os
 import textwrap
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 from git import GitCommandError
 from pydriller import Repository
 from tqdm import tqdm
 
-from simdev.util.pipeline import Pipeline, Stage, PipelineException
+from simdev.util.pipeline import Pipeline, PipelineException, Stage
 
-
-class AuthorCompound:
-    """
-    A simple structure that embodies both author's email and name
-    """
-
-    def __init__(self, name: str, email: str):
-        self.name = name
-        self.email = email
-
-    def __repr__(self) -> str:
-        """
-        :return: info about a contributor
-        """
-        return "%s <%s>" % (self.name, self.email)
-
-    def __hash__(self) -> int:
-        return int.from_bytes(hashlib.sha256(repr(self).encode('utf-8')).digest(), 'big')
-
-    def __eq__(self, o: "AuthorCompound") -> bool:
-        return (self.name, self.email) == (o.name, o.email)
+"""
+A simple structure that embodies both author's email and name
+"""
+AuthorCompound = namedtuple('AuthorCompound', ['name', 'email'])
 
 
 class FileContext:
