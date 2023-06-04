@@ -90,7 +90,7 @@ class GithubApiWrapper:
                 break
             if not isinstance(page_response, list):
                 logging.warning(
-                    F'Failure fetching stargazers for %s, skipping:'
+                    F'Failure fetching stargazers for %s:'
                     F'\nRequest: {fixed_url_part + str(current_page)}'
                     F'\nUnknown response: "%s"',
                     repo,
@@ -134,7 +134,6 @@ class GithubApiWrapper:
                         'message' in page_response and \
                         'rate limit' in page_response['message']:
                     self._update_api_token()
-                    logging.info('Current API token is ' + self._current_api_token)
                 logging.warning('Unexpected response: ' + json.dumps(page_response))
                 logging.warning('Request: ' + json.dumps(fixed_url_part + str(current_page)))
                 continue
