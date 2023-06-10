@@ -23,9 +23,9 @@ class Pipeline:
 
     def __init__(self):
         """
-        Initialize pipeline with list of stages (empty at the beginning)
-        and a list of stages previously ran to allow for getting the information from their context
-        in the future
+        Initialize pipeline with list of stages (empty at the beginning) and a list
+        of stages previously ran to allow for getting the information from their
+        context in the future
         """
         self.stages: List[Stage] = []
         self.past_stages: List[Stage] = []
@@ -57,8 +57,8 @@ class Pipeline:
                 raise exception
             except Exception as exception:
                 logging.error(
-                    "An unexpected failure occurred executing the pipeline. Please, refer to the "
-                    "following details"
+                    "An unexpected failure occurred executing the pipeline. Please, "
+                    "refer to the following details"
                 )
                 logging.error(
                     "Order: %s",

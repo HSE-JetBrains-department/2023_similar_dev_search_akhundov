@@ -120,7 +120,8 @@ class RepositoryContext:
 
     def __iter__(self):
         """
-        Make it, so we can make a dict out of the context for future serialization to JSON
+        Make it, so we can make a dict out of the context for future serialization to
+        JSON
         """
         yield from {
             "url": self.url,
@@ -196,7 +197,8 @@ class CloneStage(Stage[CloneContext]):
         to GitHub repositories to clone / fetch information about
         :param repository_urls: list of URLs to GitHub repositories
         """
-        # Context of the clone stage that embodies information of considered repositories
+        # Context of the clone stage that embodies information of considered
+        # repositories
         self._context = CloneContext(repository_urls)
 
     def run(self, pipeline: Pipeline):

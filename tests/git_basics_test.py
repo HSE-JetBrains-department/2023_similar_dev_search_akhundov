@@ -24,7 +24,8 @@ class GitBasicsTest(unittest.TestCase):
         self.assertEqual("Alexey Akhundov", contributor_context.author.name)
         self.assertEqual("me@theseems.ru", contributor_context.author.email)
 
-        self.assertEqual(22, len(contributor_context.files))  # 21 current files and 1 deleted
+        # 21 current files and 1 deleted
+        self.assertEqual(22, len(contributor_context.files))
         self.assertEqual(674, contributor_context.files['LICENSE'].added_lines)
         self.assertEqual(0, contributor_context.files['LICENSE'].deleted_lines)
         self.assertEqual(674, contributor_context.files['LICENSE'].changed_lines)
