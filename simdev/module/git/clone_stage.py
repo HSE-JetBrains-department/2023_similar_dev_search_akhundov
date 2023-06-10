@@ -4,6 +4,7 @@ import logging
 import os
 import textwrap
 from collections import defaultdict, namedtuple
+from typing import Dict, List, Set
 
 from git import GitCommandError
 from pydriller import Repository
@@ -54,7 +55,7 @@ class ContributorContext:
 
         # Dictionary of files for the author
         # (filename inside the repository to file context - context that embodies the change inside a file)
-        self.files: dict[str, FileContext] = defaultdict(lambda: FileContext())
+        self.files: Dict[str, FileContext] = defaultdict(lambda: FileContext())
 
     def __repr__(self) -> str:
         """
@@ -77,7 +78,7 @@ class RepositoryContext:
         self.url = url
         # Dictionary from author id (author compound - email and name) to their contributor context - context that
         # embodies the author and the set of files that are being changed by them per specific repository
-        self.contributors: dict[AuthorCompound, ContributorContext] = {}
+        self.contributors: Dict[AuthorCompound, ContributorContext] = {}
 
     def fulfil(self):
         """
@@ -135,7 +136,7 @@ class CloneContext:
     Context of the clone stage that embodies contexts of considered repositories
     """
 
-    def __init__(self, repository_urls: list[str]):
+    def __init__(self, repository_urls: List[str]):
         """
         Initialize the context with a list of URLs to GitHub repositories
         :param repository_urls: list of URLs to GitHub repositories to fetch information about / to clone
@@ -147,7 +148,7 @@ class CloneContext:
         Fill in the info about repository (and its context)
         :return list of excluded repos
         """
-        excluded_repos: set[RepositoryContext] = set()
+        excluded_repos: Set[RepositoryContext] = set()
         for repo_context in self.repositories:
             try:
                 repo_context.fulfil()
@@ -169,7 +170,7 @@ class CloneStage(Stage[CloneContext]):
         """
         return "Git Clone"
 
-    def __init__(self, repository_urls: list[str]):
+    def __init__(self, repository_urls: List[str]):
         """
         Initialize clone stage given the list of URLs to GitHub repositories to clone / fetch information about
         :param repository_urls: list of URLs to GitHub repositories
