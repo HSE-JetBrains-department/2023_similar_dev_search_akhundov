@@ -20,7 +20,7 @@ class GithubApiWrapper:
 
     def __init__(
         self,
-        api_tokens: List[str] | None = None,
+        api_tokens: Union[List[str], None] = None,
         github_api_url: str = "https://api.github.com/",
         max_retries_num: int = 1000,
     ):
