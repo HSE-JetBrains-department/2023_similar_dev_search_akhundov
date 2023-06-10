@@ -1,7 +1,7 @@
 import json
 import logging
 import random
-from typing import Dict, List, Set
+from typing import Any, Dict, List, Set
 
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
@@ -9,7 +9,7 @@ from requests.adapters import HTTPAdapter, Retry
 from simdev.util.pipeline import PipelineCache
 
 # Type for GitHub response for fetching starred repositories
-starred_response_type = List[Dict[str]] | Dict[str] | None
+starred_response_type = List[Dict[str, str]] | Dict[str, str] | None
 
 
 class GithubApiWrapper:
@@ -20,7 +20,7 @@ class GithubApiWrapper:
 
     def __init__(
         self,
-        api_tokens: List[str] = None,
+        api_tokens: List[str] | None = None,
         github_api_url: str = "https://api.github.com/",
         max_retries_num: int = 1000,
     ):
@@ -28,16 +28,17 @@ class GithubApiWrapper:
         Initialize GitHub API wrapper
         with parameters to use in order to fetch info from GitHub
         :param api_tokens: list of GitHub API tokens
+        :param github_api_url: URL of GitHub API
         :param max_retries_num: max number of retries
         fetching content from GitHub
         """
-        self._api_url: str = github_api_url
-        self._max_retries_num: int = max_retries_num
-        self._headers: Dict[str] = {
+        self._api_url = github_api_url
+        self._max_retries_num = max_retries_num
+        self._headers: Dict[str, str] = {
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
         }
-        self._api_tokens: List[str] = api_tokens
+        self._api_tokens = api_tokens
         self._current_api_token: str | None = None
         self._update_api_token()
 
@@ -116,11 +117,11 @@ class GithubApiWrapper:
         result = set()
 
         while True:
-            page_response = None
+            page_response: starred_response_type = None
             try:
                 if progress is not None:
                     progress.set_postfix_str("page " + str(current_page + 1))
-                page_response: starred_response_type = self._get_request_json(
+                page_response = self._get_request_json(
                     fixed_url_part + str(current_page)
                 )
                 if len(page_response) == 0 or (
