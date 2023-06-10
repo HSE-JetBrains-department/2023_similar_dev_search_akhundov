@@ -1,0 +1,13 @@
+name: Lint
+on: [ push, pull_request ]
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Python Linter
+        uses: sunnysid3up/python-linter@master
+        with:
+          source: "simdev"
+          mypy-options: "--ignore-missing-imports --show-error-codes"
+          isort-options: "-w 100"
