@@ -1,6 +1,6 @@
 import unittest
 
-from simdev.module.git.clone_stage import CloneStage, CloneContext
+from simdev.module.git.clone_stage import CloneStage
 from simdev.util.pipeline import Pipeline
 
 fixed_url = "https://github.com/TheSeems/HseNotebooks"
@@ -11,7 +11,7 @@ class GitBasicsTest(unittest.TestCase):
         self.pipeline = Pipeline()
 
     def test_public_repository(self):
-        self.pipeline.append(CloneStage(CloneContext(repository_urls=[fixed_url])))
+        self.pipeline.append(CloneStage(repository_urls=[fixed_url]))
         self.pipeline.run()
 
         clone_context = self.pipeline.get_stage_context(CloneStage)

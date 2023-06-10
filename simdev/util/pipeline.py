@@ -1,7 +1,6 @@
 import logging
-
-from abc import ABC, abstractmethod, ABCMeta
-from typing import TypeVar, Generic
+from abc import ABC, ABCMeta, abstractmethod
+from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
@@ -17,17 +16,22 @@ class PipelineException(Exception):
 
 class Pipeline:
     def __init__(self):
+        """
+        Initialize pipeline with list of stages (empty at the beginning)
+        and a list of stages previously ran to allow for getting the information from their context
+        in the future
+        """
         self.stages: list[Stage] = []
         self.past_stages: list[Stage] = []
-        self.current_stage = None
 
     def run(self):
         """
-        Run all the stages in the pipeline
+        Run all the stages in the pipeline handling all the exceptions, printing the order of execution and
+        storing ran stages
         """
-        logging.info('Pipeline structure: ' + ' -> '.join(map(lambda element: element.name, self.stages)))
+        logging.info('Pipeline structure: %s', ' -> '.join(map(lambda element: element.name, self.stages)))
         for stage in self.stages:
-            logging.info('Running: ' + stage.name)
+            logging.info('Running: %s', stage.name)
             try:
                 stage.run(self)
             except PipelineException as e:
@@ -44,7 +48,7 @@ class Pipeline:
     def append(self, stage):
         """
         Append stage to the pipeline
-        :param stage: to add
+        :param stage: to append
         """
         self.stages.append(stage)
 
