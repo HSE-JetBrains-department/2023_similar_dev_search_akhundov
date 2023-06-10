@@ -99,12 +99,14 @@ class RepositoryContext:
                 file_context.added_lines += file.added_lines
                 file_context.deleted_lines += file.deleted_lines
 
-    def __eq__(self, o: "RepositoryContext") -> bool:
+    def __eq__(self, o: object) -> bool:
         """
-        Check if the context is equal to another
+        Check if the context is equal to an object
         :param o: other repository context
         :return: if the context is equal to another
         """
+        if not isinstance(o, RepositoryContext):
+            return NotImplemented
         return self.url == o.url
 
     def __iter__(self):
