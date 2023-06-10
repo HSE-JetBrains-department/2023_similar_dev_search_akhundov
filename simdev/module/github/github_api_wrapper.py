@@ -1,7 +1,7 @@
 import json
 import logging
 import random
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Union
 
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
@@ -9,7 +9,7 @@ from requests.adapters import HTTPAdapter, Retry
 from simdev.util.pipeline import PipelineCache
 
 # Type for GitHub response for fetching starred repositories
-starred_response_type = List[Dict[str, str]] | Dict[str, str] | None
+starred_response_type = Union[List[Dict[str, str]], Dict[str, str], None]
 
 
 class GithubApiWrapper:
