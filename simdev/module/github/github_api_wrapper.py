@@ -1,7 +1,7 @@
 import json
 import logging
 import random
-from typing import Any, Dict, List, Set
+from typing import Dict, List, Set
 
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
@@ -131,7 +131,7 @@ class GithubApiWrapper:
                     break
                 for repository in page_response:
                     result.add(repository["full_name"])
-            except:
+            except Exception:
                 if (
                     page_response is not None
                     and "message" in page_response

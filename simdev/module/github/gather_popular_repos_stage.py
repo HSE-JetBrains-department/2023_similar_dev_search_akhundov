@@ -43,7 +43,8 @@ class StarredReposContext:
 
 class PopularReposContext:
     """
-    Context for storing info about repos that are popular among certain repo(-s') stargazers
+    Context for storing info about repos that are popular among certain repo(-s')
+    stargazers
     """
 
     def __init__(
@@ -99,13 +100,15 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
     ):
         """
         Initialize stage with input params
-        :param source_repos: list of URLs to GitHub repositories
+        :param source_repos: list of URLs to
+        GitHub repositories
         :param max_popular_repos_num: max number of produced (most popular) repositories
         :param page_limit: GitHub API page limit
         :param api_tokens: list of GitHub API tokens
         :param starred_repos_save_directory: path to directory to store starred repos in
         :param stargazers_save_directory: path to directory to store stargazers in
-        :param stargazers_fetch_process_count the number of processes to fetch stargazers in
+        :param stargazers_fetch_process_count the number
+        of processes to fetch stargazers in
         """
         self._context = PopularReposContext(
             source_repos,
@@ -153,7 +156,8 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         )
         repo_star_counter = Counter()
 
-        # Acknowledged stargazers maintained to avoid duplicates between several source repositories
+        # Acknowledged stargazers maintained to avoid duplicates between several
+        # source repositories
         acked_stargazers: Set[str] = set()
 
         for source_repo in source_tqdm:
