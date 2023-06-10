@@ -1,6 +1,7 @@
 import json
 import logging
 import random
+from typing import Dict, List, Set
 
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
@@ -8,42 +9,50 @@ from requests.adapters import HTTPAdapter, Retry
 from simdev.util.pipeline import PipelineCache
 
 # Type for GitHub response for fetching starred repositories
-starred_response_type = list[dict[str]] | dict[str] | None
+starred_response_type = List[Dict[str]] | Dict[str] | None
 
 
 class GithubApiWrapper:
     """
-    Wrapper for GitHub API to fetch stargazers and starred repos utilizing retries and personal access tokens
+    Wrapper for GitHub API to fetch stargazers and starred
+    repos utilizing retries and personal access tokens
     """
 
-    def __init__(self,
-                 api_tokens: list[str] = None,
-                 github_api_url: str = "https://api.github.com/",
-                 max_retries_num: int = 1000):
+    def __init__(
+        self,
+        api_tokens: List[str] = None,
+        github_api_url: str = "https://api.github.com/",
+        max_retries_num: int = 1000,
+    ):
         """
-        Initialize GitHub API wrapper with parameters to use in order to fetch info from GitHub
+        Initialize GitHub API wrapper
+        with parameters to use in order to fetch info from GitHub
         :param api_tokens: list of GitHub API tokens
-        :param max_retries_num: max number of retries fetching content from GitHub
+        :param max_retries_num: max number of retries
+        fetching content from GitHub
         """
         self._api_url: str = github_api_url
         self._max_retries_num: int = max_retries_num
-        self._headers: dict[str] = {
-            'Accept': 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28'
+        self._headers: Dict[str] = {
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
         }
-        self._api_tokens: list[str] = api_tokens
+        self._api_tokens: List[str] = api_tokens
         self._current_api_token: str | None = None
         self._update_api_token()
 
         # Making these functions get data from cache if possible
         self.fetch_stargazers = PipelineCache.memory.cache(
-            func=self.fetch_stargazers,
-            ignore=['progress', 'batch_count', 'page_limit'])
+            func=self.fetch_stargazers, ignore=["progress", "batch_count", "page_limit"]
+        )
         self.fetch_starred_repositories = PipelineCache.memory.cache(
             func=self.fetch_starred_repositories,
-            ignore=['progress', 'batch_count', 'page_limit'])
+            ignore=["progress", "batch_count", "page_limit"],
+        )
 
-    def fetch_stargazers(self, repo: str, batch_count=100, page_limit=400, progress=None) -> set[str]:
+    def fetch_stargazers(
+        self, repo: str, batch_count=100, page_limit=400, progress=None
+    ) -> Set[str]:
         """
         Fetch stargazers of the repository
         :param repo: name (GitHub flavoured. Example: theseems/HseNotebooks)
@@ -53,23 +62,31 @@ class GithubApiWrapper:
         :return: set of stargazers
         """
         if progress is not None:
-            progress.desc = F'Fetching stargazers for {repo}'
+            progress.desc = f"Fetching stargazers for {repo}"
 
-        fixed_url_part = F'{self._api_url}repos/{repo}/stargazers?per_page={str(batch_count)}&page='
+        fixed_url_part = (
+            f"{self._api_url}repos/{repo}/stargazers?per_page={str(batch_count)}&page="
+        )
         current_page = 0
-        result = set()
+        result: Set[str] = set()
 
         while True:
             if progress is not None:
                 progress.set_postfix_str("page " + str(current_page + 1))
-            page_response: list[dict] = self._get_request_json(fixed_url_part + str(current_page))
+            page_response: List[dict] = self._get_request_json(
+                fixed_url_part + str(current_page)
+            )
             if len(page_response) == 0:
                 break
             if not isinstance(page_response, list):
                 logging.warning(
-                    F'Failure fetching stargazers for {repo}:'
-                    F'\nRequest: {fixed_url_part + str(current_page)}'
-                    F'\nUnknown response: "{json.dumps(page_response)}"')
+                    "Failure fetching stargazers for %s:"
+                    "\nRequest: %s"
+                    '\nUnknown response: "%s"',
+                    repo,
+                    fixed_url_part + str(current_page),
+                    json.dumps(page_response),
+                )
                 continue
             for stargazer in page_response:
                 result.add(stargazer["login"])
@@ -78,7 +95,9 @@ class GithubApiWrapper:
                 break
         return result
 
-    def fetch_starred_repositories(self, user, batch_count=100, page_limit=400, progress=None) -> set[str]:
+    def fetch_starred_repositories(
+        self, user, batch_count=100, page_limit=400, progress=None
+    ) -> Set[str]:
         """
         Fetch repositories starred by a user
         :param user: to fetch starred repositories of
@@ -88,9 +107,11 @@ class GithubApiWrapper:
         :return: set of starred repositories
         """
         if progress is not None:
-            progress.desc = F'Fetching starred repositories of {user}'
+            progress.desc = f"Fetching starred repositories of {user}"
 
-        fixed_url_part = F'{self._api_url}users/{user}/starred?per_page={batch_count}&page='
+        fixed_url_part = (
+            f"{self._api_url}users/{user}/starred?per_page={batch_count}&page="
+        )
         current_page = 0
         result = set()
 
@@ -99,18 +120,27 @@ class GithubApiWrapper:
             try:
                 if progress is not None:
                     progress.set_postfix_str("page " + str(current_page + 1))
-                page_response: starred_response_type = self._get_request_json(fixed_url_part + str(current_page))
-                if len(page_response) == 0 or ('message' in page_response and page_response['message'] == 'Not Found'):
+                page_response: starred_response_type = self._get_request_json(
+                    fixed_url_part + str(current_page)
+                )
+                if len(page_response) == 0 or (
+                    "message" in page_response
+                    and page_response["message"] == "Not Found"
+                ):
                     break
                 for repository in page_response:
                     result.add(repository["full_name"])
             except:
-                if page_response is not None and \
-                        'message' in page_response and \
-                        'rate limit' in page_response['message']:
+                if (
+                    page_response is not None
+                    and "message" in page_response
+                    and "rate limit" in page_response["message"]
+                ):
                     self._update_api_token()
-                logging.warning(F'Unexpected response: {json.dumps(page_response)}')
-                logging.warning(F'Request: {json.dumps(fixed_url_part + str(current_page))}')
+                logging.warning("Unexpected response: %s", json.dumps(page_response))
+                logging.warning(
+                    "Request: %s", json.dumps(fixed_url_part + str(current_page))
+                )
                 continue
             current_page += 1
             if current_page > page_limit:
@@ -134,7 +164,7 @@ class GithubApiWrapper:
             new_token_pool.remove(self._current_api_token)
             self._current_api_token = random.choice(list(new_token_pool))
         if self._current_api_token is not None:
-            self._headers.update({'Authorization': F'Bearer {self._current_api_token}'})
+            self._headers.update({"Authorization": f"Bearer {self._current_api_token}"})
 
     def _get_request_json(self, url):
         """
@@ -145,11 +175,11 @@ class GithubApiWrapper:
         retries = Retry(total=self._max_retries_num, backoff_factor=1)
         session = requests.Session()
         session.headers = self._headers
-        session.mount('https://', HTTPAdapter(max_retries=retries))
+        session.mount("https://", HTTPAdapter(max_retries=retries))
         result = None
         while result is None:
             try:
                 result = session.get(url).json()
-            except:
+            except Exception:
                 continue
         return result
