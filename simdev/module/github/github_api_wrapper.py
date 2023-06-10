@@ -5,6 +5,9 @@ import random
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
 
+from simdev.util.pipeline import PipelineCache
+
+# Type for GitHub response for fetching starred repositories
 starred_response_type = list[dict[str]] | dict[str] | None
 
 
@@ -17,54 +20,28 @@ class GithubApiWrapper:
                  api_tokens: list[str] = None,
                  github_api_url: str = "https://api.github.com/",
                  max_retries_num: int = 1000):
+        """
+        Initialize GitHub API wrapper with parameters to use in order to fetch info from GitHub
+        :param api_tokens: list of GitHub API tokens
+        :param max_retries_num: max number of retries fetching content from GitHub
+        """
         self._api_url: str = github_api_url
         self._max_retries_num: int = max_retries_num
-
         self._headers: dict[str] = {
             'Accept': 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28'
         }
-
         self._api_tokens: list[str] = api_tokens
         self._current_api_token: str | None = None
         self._update_api_token()
 
-    def _update_api_token(self):
-        """
-        Switch to using another GitHub API token if possible
-        """
-        if self._api_tokens is None:
-            return
-        if len(self._api_tokens) == 0:
-            self._current_api_token = None
-        elif len(self._api_tokens) == 1:
-            self._current_api_token = self._api_tokens[0]
-        elif self._current_api_token is None:
-            self._current_api_token = random.choice(self._api_tokens)
-        else:
-            new_token_pool = set(self._api_tokens)
-            new_token_pool.remove(self._current_api_token)
-            self._current_api_token = random.choice(list(new_token_pool))
-        if self._current_api_token is not None:
-            self._headers.update({'Authorization': 'Bearer ' + self._current_api_token})
-
-    def _get_request_json(self, url):
-        """
-        Send GET request and retrieve a response as json
-        :param url: to send a request to
-        :return: json response
-        """
-        retries = Retry(total=self._max_retries_num, backoff_factor=1)
-        session = requests.Session()
-        session.headers = self._headers
-        session.mount('https://', HTTPAdapter(max_retries=retries))
-        result = None
-        while result is None:
-            try:
-                result = session.get(url).json()
-            except:
-                continue
-        return result
+        # Making these functions get data from cache if possible
+        self.fetch_stargazers = PipelineCache.memory.cache(
+            func=self.fetch_stargazers,
+            ignore=['progress', 'batch_count', 'page_limit'])
+        self.fetch_starred_repositories = PipelineCache.memory.cache(
+            func=self.fetch_starred_repositories,
+            ignore=['progress', 'batch_count', 'page_limit'])
 
     def fetch_stargazers(self, repo: str, batch_count=100, page_limit=400, progress=None) -> set[str]:
         """
@@ -76,9 +53,9 @@ class GithubApiWrapper:
         :return: set of stargazers
         """
         if progress is not None:
-            progress.desc = 'Fetching stargazers for ' + repo
+            progress.desc = F'Fetching stargazers for {repo}'
 
-        fixed_url_part = '{0}repos/{1}/stargazers?per_page={2}&page='.format(self._api_url, repo, str(batch_count))
+        fixed_url_part = F'{self._api_url}repos/{repo}/stargazers?per_page={str(batch_count)}&page='
         current_page = 0
         result = set()
 
@@ -90,11 +67,9 @@ class GithubApiWrapper:
                 break
             if not isinstance(page_response, list):
                 logging.warning(
-                    F'Failure fetching stargazers for %s:'
+                    F'Failure fetching stargazers for {repo}:'
                     F'\nRequest: {fixed_url_part + str(current_page)}'
-                    F'\nUnknown response: "%s"',
-                    repo,
-                    json.dumps(page_response))
+                    F'\nUnknown response: "{json.dumps(page_response)}"')
                 continue
             for stargazer in page_response:
                 result.add(stargazer["login"])
@@ -113,9 +88,9 @@ class GithubApiWrapper:
         :return: set of starred repositories
         """
         if progress is not None:
-            progress.desc = 'Fetching starred repositories of ' + user
+            progress.desc = F'Fetching starred repositories of {user}'
 
-        fixed_url_part = '{0}users/{1}/starred?per_page={2}&page='.format(self._api_url, user, batch_count)
+        fixed_url_part = F'{self._api_url}users/{user}/starred?per_page={batch_count}&page='
         current_page = 0
         result = set()
 
@@ -134,10 +109,47 @@ class GithubApiWrapper:
                         'message' in page_response and \
                         'rate limit' in page_response['message']:
                     self._update_api_token()
-                logging.warning('Unexpected response: ' + json.dumps(page_response))
-                logging.warning('Request: ' + json.dumps(fixed_url_part + str(current_page)))
+                logging.warning(F'Unexpected response: {json.dumps(page_response)}')
+                logging.warning(F'Request: {json.dumps(fixed_url_part + str(current_page))}')
                 continue
             current_page += 1
             if current_page > page_limit:
                 break
+        return result
+
+    def _update_api_token(self):
+        """
+        Switch to using another GitHub API token if possible
+        """
+        if self._api_tokens is None:
+            return
+        if len(self._api_tokens) == 0:
+            self._current_api_token = None
+        elif len(self._api_tokens) == 1:
+            self._current_api_token = self._api_tokens[0]
+        elif self._current_api_token is None:
+            self._current_api_token = random.choice(self._api_tokens)
+        else:
+            new_token_pool = set(self._api_tokens)
+            new_token_pool.remove(self._current_api_token)
+            self._current_api_token = random.choice(list(new_token_pool))
+        if self._current_api_token is not None:
+            self._headers.update({'Authorization': F'Bearer {self._current_api_token}'})
+
+    def _get_request_json(self, url):
+        """
+        Send GET request and retrieve a response as json
+        :param url: to send a request to
+        :return: json response
+        """
+        retries = Retry(total=self._max_retries_num, backoff_factor=1)
+        session = requests.Session()
+        session.headers = self._headers
+        session.mount('https://', HTTPAdapter(max_retries=retries))
+        result = None
+        while result is None:
+            try:
+                result = session.get(url).json()
+            except:
+                continue
         return result
