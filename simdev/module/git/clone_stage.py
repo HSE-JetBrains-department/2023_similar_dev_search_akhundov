@@ -12,10 +12,8 @@ from tqdm import tqdm
 
 from simdev.util.pipeline import Pipeline, PipelineException, Stage
 
-"""
-A simple structure that embodies both author's email and name
-"""
-AuthorCompound = namedtuple('AuthorCompound', ['name', 'email'])
+# A simple structure that embodies both author's email and name
+AuthorCompound = namedtuple("AuthorCompound", ["name", "email"])
 
 
 class FileContext:
@@ -43,7 +41,8 @@ class FileContext:
 
 class ContributorContext:
     """
-    Context that embodies the author and the set of files that are being changed by them per specific repository
+    Context that embodies the author and the set of files that
+    are being changed by them per specific repository
     """
 
     def __init__(self, author: AuthorCompound):
@@ -53,20 +52,22 @@ class ContributorContext:
         """
         self.author = author
 
-        # Dictionary of files for the author
-        # (filename inside the repository to file context - context that embodies the change inside a file)
+        # Dictionary of files for the author:
+        # Filename inside the repository to file context
+        # - context that embodies the change inside a file
         self.files: Dict[str, FileContext] = defaultdict(lambda: FileContext())
 
     def __repr__(self) -> str:
         """
         :return: info about changed files
         """
-        return "%s: %s" % (repr(self.author), repr(self.files))
+        return f"{repr(self.author)}: {repr(self.files)}"
 
 
 class RepositoryContext:
     """
-    Context that embodies a repository alongside with their contributors' contexts and whether this repository is
+    Context that embodies a repository alongside with
+    their contributors' contexts and whether this repository is
     excluded from further consideration or not due to any reasons
     """
 
@@ -76,13 +77,16 @@ class RepositoryContext:
         :param url: URL to GitHub repository
         """
         self.url = url
-        # Dictionary from author id (author compound - email and name) to their contributor context - context that
-        # embodies the author and the set of files that are being changed by them per specific repository
+        # Dictionary from author id (author compound - email and name) to their
+        # contributor context - context that
+        # embodies the author and the set of files that
+        # are being changed by them per specific repository
         self.contributors: Dict[AuthorCompound, ContributorContext] = {}
 
     def fulfil(self):
         """
-        Fill in information for the repository context: we fetch commits, files and information about them
+        Fill in information for the repository context:
+        we fetch commits, files and information about them
         and write it to the context
         """
         repository = Repository(self.url, num_workers=os.cpu_count())
@@ -91,23 +95,28 @@ class RepositoryContext:
             author = AuthorCompound(commit.author.name, commit.author.email)
             for file in commit.modified_files:
                 commits.set_postfix_str(
-                    'Commit \'%s\', file \'%s\'' % (
-                        textwrap.shorten(commit.msg.split('\n')[0], width=40),
-                        textwrap.shorten(file.filename, width=40)))
-                contributor_context = self.contributors.setdefault(author, ContributorContext(author))
+                    "Commit '%s', file '%s'"
+                    % (
+                        textwrap.shorten(commit.msg.split("\n")[0], width=40),
+                        textwrap.shorten(file.filename, width=40),
+                    )
+                )
+                contributor_context = self.contributors.setdefault(
+                    author, ContributorContext(author)
+                )
                 file_context = contributor_context.files[file.filename]
                 file_context.added_lines += file.added_lines
                 file_context.deleted_lines += file.deleted_lines
 
-    def __eq__(self, o: object) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Check if the context is equal to an object
-        :param o: other repository context
+        :param other: other repository context
         :return: if the context is equal to another
         """
-        if not isinstance(o, RepositoryContext):
+        if not isinstance(other, RepositoryContext):
             return NotImplemented
-        return self.url == o.url
+        return self.url == other.url
 
     def __iter__(self):
         """
@@ -115,7 +124,7 @@ class RepositoryContext:
         """
         yield from {
             "url": self.url,
-            "contributors": list(map(repr, self.contributors))
+            "contributors": list(map(repr, self.contributors)),
         }.items()
 
     def __repr__(self):
@@ -130,18 +139,22 @@ class RepositoryContext:
         Hash the context by its string representation
         :return: hash value
         """
-        return int.from_bytes(hashlib.sha256(repr(self).encode('utf-8')).digest(), 'big')
+        return int.from_bytes(
+            hashlib.sha256(repr(self).encode("utf-8")).digest(), "big"
+        )
 
 
 class CloneContext:
     """
-    Context of the clone stage that embodies contexts of considered repositories
+    Context of the clone stage that embodies
+    contexts of considered repositories
     """
 
     def __init__(self, repository_urls: List[str]):
         """
         Initialize the context with a list of URLs to GitHub repositories
-        :param repository_urls: list of URLs to GitHub repositories to fetch information about / to clone
+        :param repository_urls: list of URLs to GitHub
+        repositories to fetch information about / to clone
         """
         self.repositories = [RepositoryContext(url) for url in repository_urls]
 
@@ -154,8 +167,13 @@ class CloneContext:
         for repo_context in self.repositories:
             try:
                 repo_context.fulfil()
-            except GitCommandError as e:
-                logging.warning(F"Failed to clone, skipping {repo_context.url}: {' '.join(e.command)} ==> {e.stderr}")
+            except GitCommandError as exception:
+                logging.warning(
+                    "Failed to clone, skipping %s: %s ==> %s",
+                    repo_context.url,
+                    " ".join(exception.command),
+                    exception.stderr,
+                )
                 excluded_repos.add(repo_context)
             return excluded_repos
 
@@ -174,7 +192,8 @@ class CloneStage(Stage[CloneContext]):
 
     def __init__(self, repository_urls: List[str]):
         """
-        Initialize clone stage given the list of URLs to GitHub repositories to clone / fetch information about
+        Initialize clone stage given the list of URLs
+        to GitHub repositories to clone / fetch information about
         :param repository_urls: list of URLs to GitHub repositories
         """
         # Context of the clone stage that embodies information of considered repositories
@@ -188,8 +207,11 @@ class CloneStage(Stage[CloneContext]):
         if len(self._context.repositories) == 0:
             raise PipelineException("An empty list of repositories is provided")
         excluded_contexts = self._context.fulfil()
-        self._context.repositories = [context for context in self._context.repositories
-                                      if context not in excluded_contexts]
+        self._context.repositories = [
+            context
+            for context in self._context.repositories
+            if context not in excluded_contexts
+        ]
 
     @property
     def context(self):
