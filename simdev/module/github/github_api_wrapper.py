@@ -54,6 +54,16 @@ def _update_tqdm_page_postfix(progress: tqdm.tqdm, page: int):
         progress.set_postfix_str(F"page {page}")
 
 
+def _update_tqdm_description(progress: tqdm.tqdm, description: str):
+    """
+    Update TQDM description
+    :param progress: to update
+    :param description: current action's description
+    """
+    if progress is not None:
+        progress.set_description(description)
+
+
 class GithubApiWrapper:
     """
     Wrapper for GitHub API to fetch stargazers and starred
@@ -61,10 +71,10 @@ class GithubApiWrapper:
     """
 
     def __init__(
-        self,
-        api_tokens: Union[List[str], None] = None,
-        github_api_url: str = "https://api.github.com/",
-        max_retries_num: int = 1000,
+            self,
+            api_tokens: Union[List[str], None] = None,
+            github_api_url: str = "https://api.github.com/",
+            max_retries_num: int = 1000,
     ):
         """
         Initialize GitHub API wrapper
@@ -105,9 +115,7 @@ class GithubApiWrapper:
         :param progress: TQDM progress if any
         :return: set of stargazers
         """
-        if progress is not None:
-            progress.desc = f"Fetching stargazers for {repo}"
-
+        _update_tqdm_description(progress, f"Fetching stargazers for {repo}")
         fixed_url_part = (
             f"{self._api_url}repos/{repo}/stargazers?per_page={str(batch_count)}&page="
         )
@@ -142,9 +150,8 @@ class GithubApiWrapper:
         :param progress: TQDM progress
         :return: set of starred repositories
         """
-        if progress is not None:
-            progress.desc = f"Fetching starred repositories of {user}"
-
+        _update_tqdm_description(progress,
+                                 f"Fetching starred repositories of {user}")
         fixed_url_part = \
             f"{self._api_url}users/{user}/starred?per_page={batch_count}&page="
 
