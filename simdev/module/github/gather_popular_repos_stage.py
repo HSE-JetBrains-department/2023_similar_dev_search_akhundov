@@ -38,7 +38,7 @@ class StarredReposContext:
         # Set of GitHub repository notations
         # (<user>/<repository_name>, <organization>/<repository_name>)
         # starred by the user
-        self.repos: Set[str] = set()
+        self.starred_repos: Set[str] = set()
 
 
 class PopularReposContext:
@@ -183,11 +183,13 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         :return: user alongside with their starred repos
         """
         starred_context = StarredReposContext(user=stargazer)
-        starred_context.repos = self._api_wrapper.fetch_starred_repositories(
-            user=stargazer, progress=None, page_limit=self._context.page_limit
+        starred_context.starred_repos = self._api_wrapper.fetch_starred_repositories(
+            user=stargazer,
+            progress=None,
+            page_limit=self._context.page_limit
         )
 
-        return stargazer, starred_context.repos
+        return stargazer, starred_context.starred_repos
 
     @property
     def context(self):
