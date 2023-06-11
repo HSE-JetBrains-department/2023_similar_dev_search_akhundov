@@ -64,10 +64,10 @@ class ContributorContext:
         return f"{repr(self.author)}: {repr(self.files)}"
 
 
-class RepositoryContext:
+class RepoContext:
     """
     Context that embodies a repository alongside with
-    their contributors' contexts and whether this repository is
+    its contributors' contexts and whether this repository is
     excluded from further consideration or not due to any reasons
     """
 
@@ -89,8 +89,8 @@ class RepositoryContext:
         we fetch commits, files and information about them
         and write it to the context
         """
-        repository = Repository(self.url, num_workers=os.cpu_count())
-        commits = tqdm(repository.traverse_commits(), desc=self.url)
+        repo = Repository(self.url, num_workers=os.cpu_count())
+        commits = tqdm(repo.traverse_commits(), desc=self.url)
         for commit in commits:
             author = AuthorCompound(commit.author.name, commit.author.email)
             for file in commit.modified_files:
@@ -114,7 +114,7 @@ class RepositoryContext:
         :param other: other repository context
         :return: if the context is equal to another
         """
-        if not isinstance(other, RepositoryContext):
+        if not isinstance(other, RepoContext):
             return NotImplemented
         return self.url == other.url
 
@@ -151,21 +151,21 @@ class CloneContext:
     contexts of considered repositories
     """
 
-    def __init__(self, repository_urls: List[str]):
+    def __init__(self, repo_urls: List[str]):
         """
         Initialize the context with a list of URLs to GitHub repositories
-        :param repository_urls: list of URLs to GitHub
+        :param repo_urls: list of URLs to GitHub
         repositories to fetch information about / to clone
         """
-        self.repositories = [RepositoryContext(url) for url in repository_urls]
+        self.repo_contexts = [RepoContext(url) for url in repo_urls]
 
     def fulfil(self):
         """
         Fill in the info about repository (and its context)
         :return list of excluded repos
         """
-        excluded_repos: Set[RepositoryContext] = set()
-        for repo_context in self.repositories:
+        excluded_contexts: Set[RepoContext] = set()
+        for repo_context in self.repo_contexts:
             try:
                 repo_context.fulfil()
             except GitCommandError as exception:
@@ -175,8 +175,8 @@ class CloneContext:
                     " ".join(exception.command),
                     exception.stderr,
                 )
-                excluded_repos.add(repo_context)
-            return excluded_repos
+                excluded_contexts.add(repo_context)
+        return excluded_contexts
 
 
 class CloneStage(Stage[CloneContext]):
@@ -191,27 +191,27 @@ class CloneStage(Stage[CloneContext]):
         """
         return "Git Clone"
 
-    def __init__(self, repository_urls: List[str]):
+    def __init__(self, repo_urls: List[str]):
         """
         Initialize clone stage given the list of URLs
         to GitHub repositories to clone / fetch information about
-        :param repository_urls: list of URLs to GitHub repositories
+        :param repo_urls: list of URLs to GitHub repositories
         """
         # Context of the clone stage that embodies information of considered
         # repositories
-        self._context = CloneContext(repository_urls)
+        self._context = CloneContext(repo_urls)
 
     def run(self, pipeline: Pipeline):
         """
         Fulfill info about repositories and exclude faulty ones
         :param pipeline the pipeline from which the stage is executed
         """
-        if len(self._context.repositories) == 0:
+        if len(self._context.repo_contexts) == 0:
             raise PipelineException("An empty list of repositories is provided")
         excluded_contexts = self._context.fulfil()
-        self._context.repositories = [
+        self._context.repo_contexts = [
             context
-            for context in self._context.repositories
+            for context in self._context.repo_contexts
             if context not in excluded_contexts
         ]
 

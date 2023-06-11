@@ -10,17 +10,17 @@ class GitBasicsTest(unittest.TestCase):
     def setUp(self):
         self.pipeline = Pipeline()
 
-    def test_public_repository(self):
-        self.pipeline.append(CloneStage(repository_urls=[fixed_url]))
+    def test_public_repo(self):
+        self.pipeline.append(CloneStage(repo_urls=[fixed_url]))
         self.pipeline.run()
 
         clone_context = self.pipeline.get_stage_context(CloneStage)
-        self.assertEqual(1, len(clone_context.repositories))
+        self.assertEqual(1, len(clone_context.repo_contexts))
 
-        repository_context = clone_context.repositories[0]
-        self.assertEqual(1, len(repository_context.contributors))
+        repo_context = clone_context.repo_contexts[0]
+        self.assertEqual(1, len(repo_context.contributors))
 
-        contributor_context = next(iter(repository_context.contributors.items()))[1]
+        contributor_context = next(iter(repo_context.contributors.items()))[1]
         self.assertEqual("Alexey Akhundov", contributor_context.author.name)
         self.assertEqual("me@theseems.ru", contributor_context.author.email)
 
