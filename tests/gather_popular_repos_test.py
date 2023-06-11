@@ -18,8 +18,6 @@ class GatherPopularReposBasicTest(unittest.TestCase):
             api_tokens=[],
             max_popular_repos_num=100,
             page_limit=400,
-            stargazers_save_directory='stargazers',
-            starred_repos_save_directory='starred',
             stargazers_fetch_process_count=6))
         self.pipeline.run()
         result = self.pipeline.get_stage_context(
