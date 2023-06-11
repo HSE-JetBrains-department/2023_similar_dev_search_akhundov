@@ -3,7 +3,7 @@ from typing import List
 
 import click
 
-from simdev.module.git.clone_stage import CloneStage, RepositoryContext
+from simdev.module.git.clone_stage import CloneContext, CloneStage
 from simdev.module.github.gather_popular_repos_stage import GatherPopularReposStage
 from simdev.util.pipeline import Pipeline
 
@@ -41,14 +41,23 @@ def simdev():
               help='Max amount of top popular repositories to get')
 @click.option('--page_limit', default=400, type=int,
               help='GitHub API page limit')
-def get_top_repos(sources: List[str],
+def get_top_repos(source: List[str],
                   tokens: List[str],
                   processes: int,
                   count: int,
                   page_limit: int):
+    """
+    Get top-n popular repositories among stargazers of source repositories
+    and print them
+    :param source: list of URLs to GitHub source repositories
+    :param tokens: GitHub API tokens to fetch information with
+    :param processes: Number of processes to fetch starred repositories in
+    :param count: Max amount of top popular repositories to get (top-100, top-10, etc.)
+    :param page_limit: GitHub API page limit
+    """
     main_pipeline.append(
         GatherPopularReposStage(
-            source_repos=sources,
+            source_repos=source,
             api_tokens=tokens,
             max_popular_repos_num=count,
             stargazers_fetch_process_count=processes,
@@ -65,11 +74,14 @@ def get_top_repos(sources: List[str],
               multiple=True,
               help='List of repositories to fetch information about')
 def clone_repos(source: List[str]):
+    """
+    Clone repositories & print information about them
+    :param source: list of URLs to GitHub repositories to clone and get info about
+    """
     main_pipeline.append(CloneStage(source))
     main_pipeline.run()
-    repos: List[RepositoryContext] = main_pipeline \
-        .get_stage_context(CloneStage) \
-        .repositories
+    stage_context: CloneContext = main_pipeline.get_stage_context(CloneStage)
+    repos = stage_context.repo_contexts
     for repo in repos:
         print(F'Repository {repo.url}')
         for (contributor, contributor_context) in repo.contributors.items():
