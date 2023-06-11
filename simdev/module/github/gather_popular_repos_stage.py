@@ -52,9 +52,7 @@ class PopularReposContext:
         source_repos: List[str],
         max_popular_repos_num: int,
         page_limit: int,
-        api_tokens: List[str],
-        starred_repos_save_directory: str,
-        stargazers_save_directory: str,
+        api_tokens: List[str]
     ):
         """
         Initialize popular repositories context
@@ -62,15 +60,11 @@ class PopularReposContext:
         :param max_popular_repos_num: max number of produced (most popular) repositories
         :param page_limit: GitHub API page limit
         :param api_tokens: list of GitHub API tokens
-        :param starred_repos_save_directory: path to directory to store starred repos in
-        :param stargazers_save_directory: path to directory to store stargazers in
         """
         self.source_repositories = source_repos
         self.api_tokens = api_tokens
         self.max_popular_repos = max_popular_repos_num
         self.page_limit = page_limit
-        self.starred_repos_save_directory = starred_repos_save_directory
-        self.stargazers_save_directory = stargazers_save_directory
         # Final dictionary of popular repositories:
         # GitHub repository notation to count of common stargazers
         self.popular_repositories: Dict[str, int] = {}
@@ -94,8 +88,6 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         max_popular_repos_num: int,
         page_limit: int,
         api_tokens: List[str],
-        starred_repos_save_directory: str,
-        stargazers_save_directory: str,
         stargazers_fetch_process_count: int,
     ):
         """
@@ -105,8 +97,6 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
         :param max_popular_repos_num: max number of produced (most popular) repositories
         :param page_limit: GitHub API page limit
         :param api_tokens: list of GitHub API tokens
-        :param starred_repos_save_directory: path to directory to store starred repos in
-        :param stargazers_save_directory: path to directory to store stargazers in
         :param stargazers_fetch_process_count the number
         of processes to fetch stargazers in
         """
@@ -114,9 +104,7 @@ class GatherPopularReposStage(Stage[PopularReposContext]):
             source_repos,
             max_popular_repos_num,
             page_limit,
-            api_tokens,
-            starred_repos_save_directory,
-            stargazers_save_directory,
+            api_tokens
         )
         self._api_wrapper = GithubApiWrapper(api_tokens=self._context.api_tokens)
         self.stargazers_fetch_process_count = stargazers_fetch_process_count
