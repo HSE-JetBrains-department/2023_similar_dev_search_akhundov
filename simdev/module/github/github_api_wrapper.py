@@ -129,8 +129,8 @@ class GithubApiWrapper:
                     and page_response["message"] == "Not Found"
                 ):
                     break
-                for repository in page_response:
-                    result.add(repository["full_name"])
+                for repo in page_response:
+                    result.add(repo["full_name"])
             except Exception:
                 if (
                     page_response is not None
