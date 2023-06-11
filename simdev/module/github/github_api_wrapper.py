@@ -44,7 +44,7 @@ def _report_unknown_response(response: Any, url: str):
     logging.warning("Request: %s", url)
 
 
-def _update_tqdm_page_postfix(progress: Union[tqdm, None], page: int):
+def _update_tqdm_page_postfix(progress: tqdm.tqdm, page: int):
     """
     Update TQDM postfix rolling over pages
     :param progress: to update
@@ -95,7 +95,7 @@ class GithubApiWrapper:
 
     def fetch_stargazers(
             self, repo: str, batch_count=100, page_limit=400,
-            progress: Union[tqdm, None] = None
+            progress: tqdm.tqdm = None
     ) -> Set[str]:
         """
         Fetch stargazers of the repository
@@ -132,7 +132,7 @@ class GithubApiWrapper:
 
     def fetch_starred_repositories(
             self, user: str, batch_count=100, page_limit=400,
-            progress: Union[tqdm, None] = None
+            progress: tqdm.tqdm = None
     ) -> Set[str]:
         """
         Fetch repositories starred by a user
