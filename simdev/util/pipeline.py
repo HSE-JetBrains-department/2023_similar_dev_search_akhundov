@@ -2,6 +2,8 @@ import logging
 from abc import ABC, ABCMeta, abstractmethod
 from typing import Generic, List, TypeVar
 
+from joblib import Memory
+
 T = TypeVar("T")
 
 
@@ -12,6 +14,14 @@ class PipelineException(Exception):
     as it is used to inform the user about their inconsistent input
     or when any predictable pipeline-blocking situation is observed
     """
+
+
+class PipelineCache:
+    """
+    Utility class that stores pipeline cache (for stages)
+    """
+
+    memory = Memory("cache", verbose=False)
 
 
 class Pipeline:

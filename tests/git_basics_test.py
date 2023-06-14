@@ -1,17 +1,19 @@
 import unittest
 
 from simdev.module.git.clone_stage import CloneStage
-from simdev.util.pipeline import Pipeline
+from simdev.util.pipeline import Pipeline, PipelineCache
 
-fixed_url = "https://github.com/TheSeems/HseNotebooks"
+# Sample read-only repository
+TEST_REPO_URL = "https://github.com/TheSeems/HseNotebooks"
 
 
 class GitBasicsTest(unittest.TestCase):
     def setUp(self):
         self.pipeline = Pipeline()
+        PipelineCache.memory.clear()
 
     def test_public_repo(self):
-        self.pipeline.append(CloneStage(repo_urls=[fixed_url]))
+        self.pipeline.append(CloneStage(repo_urls=[TEST_REPO_URL]))
         self.pipeline.run()
 
         clone_context = self.pipeline.get_stage_context(CloneStage)
