@@ -147,8 +147,8 @@ class TreeSitterStage(Stage[TreeSitterContext]):
             self._clone_language_binding(lang)
 
         lang_progress.set_description('Building...')
-        Language.build_library(output_path=self._get_shared_object_file_path(),
-                               repo_paths=[self._get_repo_build_path(url)
+        Language.build_library(output_path=str(self._get_shared_object_file_path()),
+                               repo_paths=[str(self._get_repo_build_path(url))
                                            for url in self.lang_bindings.values()])
 
         for lang in self.lang_bindings:
