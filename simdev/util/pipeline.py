@@ -1,5 +1,5 @@
-import logging
 from abc import ABC, ABCMeta, abstractmethod
+import logging
 from typing import Generic, List, TypeVar
 
 from joblib import Memory

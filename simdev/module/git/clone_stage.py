@@ -1,9 +1,9 @@
+from collections import defaultdict, namedtuple
 import hashlib
 import json
 import logging
 import os
 import textwrap
-from collections import defaultdict, namedtuple
 from typing import Dict, List, Set
 
 from git import GitCommandError

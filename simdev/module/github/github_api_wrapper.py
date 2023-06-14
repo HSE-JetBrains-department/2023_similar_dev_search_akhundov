@@ -4,8 +4,8 @@ import random
 from typing import Any, Dict, List, Set, Union
 
 import requests as requests
-import tqdm as tqdm
 from requests.adapters import HTTPAdapter, Retry
+import tqdm as tqdm
 
 from simdev.util.pipeline import PipelineCache
 
