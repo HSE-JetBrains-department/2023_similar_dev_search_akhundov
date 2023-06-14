@@ -1,3 +1,7 @@
+![Lint and test](https://github.com/HSE-JetBrains-department/2023_similar_dev_search_akhundov/actions/workflows/lint_and_test.yml/badge.svg)
+
+---
+
 # Поиск схожих разработчиков
 Проект по дисциплине "Исходный код как данные" 3 курса ПИ ФКН НИУ ВШЭ.
 
