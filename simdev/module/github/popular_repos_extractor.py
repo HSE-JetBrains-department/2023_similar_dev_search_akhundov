@@ -41,7 +41,7 @@ class PopularReposExtractor:
         # Cache the main fetching function
         self.extract = PipelineCache.memory.cache(self.extract)
 
-    def extract(self):
+    def extract(self) -> None:
         """
         Firstly, we retrieve all the stargazers for the requested repositories,
         merging them to avoid duplicates.
@@ -91,7 +91,7 @@ class PopularReposExtractor:
             dict(Counter(repo_star_counter).most_common(self.max_popular_repos_num))
 
     @property
-    def popular_repos(self):
+    def popular_repos(self) -> Dict[str, int]:
         """
         :return: computer popular repositories dict
         (GitHub notation of repo to the number of stargazers)

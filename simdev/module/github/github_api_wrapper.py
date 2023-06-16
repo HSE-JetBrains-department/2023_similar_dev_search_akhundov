@@ -13,7 +13,7 @@ from simdev.util.pipeline import PipelineCache
 starred_response_type = Union[List[Dict[str, str]], Dict[str, str], None]
 
 
-def _is_rate_limit_reached(page_response: starred_response_type):
+def _is_rate_limit_reached(page_response: starred_response_type) -> bool:
     """
     Check by the response if the rate limit has been reached
     :param page_response: response object
@@ -24,7 +24,7 @@ def _is_rate_limit_reached(page_response: starred_response_type):
         and "rate limit" in page_response["message"]
 
 
-def _is_response_not_found(page_response: starred_response_type):
+def _is_response_not_found(page_response: starred_response_type) -> bool:
     """
     Check by the response if content is not found
     :param page_response: response object
@@ -34,7 +34,7 @@ def _is_response_not_found(page_response: starred_response_type):
         ("message" in page_response and page_response["message"] == "Not Found")
 
 
-def _report_unknown_response(response: Any, url: str):
+def _report_unknown_response(response: Any, url: str) -> None:
     """
     Report unexpected response
     :param response: actual response object
@@ -44,7 +44,7 @@ def _report_unknown_response(response: Any, url: str):
     logging.warning("Request: %s", url)
 
 
-def _update_tqdm_page_postfix(progress: tqdm.tqdm, page: int):
+def _update_tqdm_page_postfix(progress: tqdm.tqdm, page: int) -> None:
     """
     Update TQDM postfix rolling over pages
     :param progress: to update
@@ -54,7 +54,7 @@ def _update_tqdm_page_postfix(progress: tqdm.tqdm, page: int):
         progress.set_postfix_str(F"page {page}")
 
 
-def _update_tqdm_description(progress: tqdm.tqdm, description: str):
+def _update_tqdm_description(progress: tqdm.tqdm, description: str) -> None:
     """
     Update TQDM description
     :param progress: to update

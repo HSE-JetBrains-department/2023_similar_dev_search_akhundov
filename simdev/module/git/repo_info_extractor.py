@@ -21,7 +21,7 @@ DevRepoInfo = TypedDict('DevRepoInfo', {'files': Dict[str, FileInfo]})
 DevInfo = Dict[str, Dict[str, DevRepoInfo]]
 
 
-def _handle_modified_file(file: ModifiedFile, repo_info: DevRepoInfo):
+def _handle_modified_file(file: ModifiedFile, repo_info: DevRepoInfo) -> None:
     """
     Account for a single modified file
     :param file: to handle
