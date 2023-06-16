@@ -82,8 +82,7 @@ def clone_repos(source: List[str], export: str) -> None:
     :param source: list of URLs to GitHub repositories to clone and get info about
     :param export: Path to export json results to
     """
-    extractor = RepoInfoExtractor()
-    extractor.extract(source)
+    extractor = RepoInfoExtractor(source)
     create_and_write(extractor.dev_info, export)
 
 
