@@ -178,7 +178,7 @@ class GithubApiWrapper:
                 break
         return result
 
-    def _update_api_token(self):
+    def _update_api_token(self) -> None:
         """
         Switch to using another GitHub API token if possible
         """
@@ -197,7 +197,7 @@ class GithubApiWrapper:
         if self._current_api_token is not None:
             self._headers.update({"Authorization": f"Bearer {self._current_api_token}"})
 
-    def _get_request_json(self, url: str):
+    def _get_request_json(self, url: str) -> Any:
         """
         Send GET request and retrieve a response as json
         :param url: to send a request to
