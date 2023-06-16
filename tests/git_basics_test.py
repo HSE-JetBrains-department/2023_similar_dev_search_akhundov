@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from simdev.module.git.repo_info_extractor import RepoInfoExtractor
