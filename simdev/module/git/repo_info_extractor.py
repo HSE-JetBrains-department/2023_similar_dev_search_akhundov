@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter, defaultdict
 import logging
 import textwrap
 from typing import Dict, List, TypedDict
@@ -7,6 +7,8 @@ from git import GitCommandError
 from pydriller import ModifiedFile, Repository
 from tqdm import tqdm
 
+from simdev.util.lang_utils import classify_language
+
 # Class for storing information about a single file: lines, variables, etc.
 FileInfo = TypedDict('FileInfo', {'added_lines': int, 'deleted_lines': int})
 
@@ -14,7 +16,11 @@ FileInfo = TypedDict('FileInfo', {'added_lines': int, 'deleted_lines': int})
 # To store information about changes of a developer in some (inside)
 # repository: files, in-code identifiers, languages etc.
 # files: from filename to info about the file
-DevRepoInfo = TypedDict('DevRepoInfo', {'files': Dict[str, FileInfo]})
+# langs: from language name to count of files in which this language is classified
+DevRepoInfo = TypedDict('DevRepoInfo', {
+    'files': Dict[str, FileInfo],
+    'langs': Counter
+})
 
 # Type that embodies information about developers:
 # Developer identity (Email) -> Repository path -> Repository info
@@ -30,6 +36,13 @@ def _handle_modified_file(file: ModifiedFile, repo_info: DevRepoInfo) -> None:
     file_info = repo_info['files'][file.filename]
     file_info['added_lines'] += file.added_lines
     file_info['deleted_lines'] += file.deleted_lines
+
+    # Do not classify removed files
+    if file.new_path is not None:
+        lang = classify_language(file.filename, file.content, file.new_path)
+        # If language is determined update the counter
+        if lang is not None:
+            repo_info['langs'].update([lang])
 
 
 class RepoInfoExtractor:
@@ -50,8 +63,9 @@ class RepoInfoExtractor:
         # Developer identity (Email) -> Repository path -> Repository info
         self._dev_info: DevInfo = defaultdict(
             lambda: defaultdict(
-                lambda: DevRepoInfo(files=defaultdict(
-                    lambda: FileInfo(added_lines=0, deleted_lines=0)))))
+                lambda: DevRepoInfo(
+                    files=defaultdict(lambda: FileInfo(added_lines=0, deleted_lines=0)),
+                    langs=Counter())))
 
     def extract(self) -> None:
         """
