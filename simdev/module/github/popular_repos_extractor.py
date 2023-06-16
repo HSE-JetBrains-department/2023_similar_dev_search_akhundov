@@ -39,9 +39,9 @@ class PopularReposExtractor:
         self._popular_repos: Dict[str, int] = {}
 
         # Cache the main fetching function
-        self.run = PipelineCache.memory.cache(self.run)
+        self.extract = PipelineCache.memory.cache(self.extract)
 
-    def run(self):
+    def extract(self):
         """
         Firstly, we retrieve all the stargazers for the requested repositories,
         merging them to avoid duplicates.

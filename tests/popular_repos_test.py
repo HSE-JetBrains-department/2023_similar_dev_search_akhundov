@@ -19,7 +19,7 @@ class GatherPopularReposBasicTest(unittest.TestCase):
             page_limit=400,
             stargazers_fetch_process_count=6
         )
-        extractor.run()
+        extractor.extract()
         self.assertTrue(TEST_REPO in extractor.popular_repos)
         self.assertTrue(
             all([stars == 1 for (repo, stars) in extractor.popular_repos.items() if

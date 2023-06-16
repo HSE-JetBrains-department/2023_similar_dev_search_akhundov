@@ -1,7 +1,7 @@
 import json
 import logging
 import random
-from typing import Any, Dict, List, Set, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
 import requests as requests
 from requests.adapters import HTTPAdapter, Retry
@@ -91,7 +91,7 @@ class GithubApiWrapper:
             "X-GitHub-Api-Version": "2022-11-28",
         }
         self._api_tokens = api_tokens
-        self._current_api_token: str | None = None
+        self._current_api_token: Optional[str] = None
         self._update_api_token()
 
         # Making these functions get data from cache if possible
