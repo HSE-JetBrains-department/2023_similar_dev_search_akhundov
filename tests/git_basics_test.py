@@ -31,6 +31,7 @@ class GitBasicsTest(unittest.TestCase):
         extractor.extract()
         repo_info = extractor.dev_info['santi@mola.io'][TEST_LANGUAGES_REPO_URL]
         langs = repo_info['langs']
+
         self.assertEqual({'Go': 6}, dict(langs))
         repo_info = extractor.dev_info['bzz@apache.org'][TEST_LANGUAGES_REPO_URL]
         self.assertEqual(
