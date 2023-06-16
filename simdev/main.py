@@ -1,14 +1,12 @@
 import logging
+from pathlib import Path
 from typing import List
 
 import click
 
-from simdev.module.git.clone_stage import CloneContext, CloneStage
-from simdev.module.github.gather_popular_repos_stage import GatherPopularReposStage
-from simdev.util.pipeline import Pipeline
-
-# Main pipeline object used by all the subcommands
-main_pipeline = Pipeline()
+from simdev.module.git.repo_info_extractor import RepoInfoExtractor
+from simdev.module.github.popular_repos_extractor import PopularReposExtractor
+from simdev.util.export_utils import create_and_write
 
 
 @click.group(invoke_without_command=True, no_args_is_help=True)
@@ -41,31 +39,34 @@ def simdev():
               help='Max amount of top popular repositories to get')
 @click.option('--page_limit', default=400, type=int,
               help='GitHub API page limit')
+@click.option('--export', type=click.Path(dir_okay=False, file_okay=True),
+              default=Path('results') / 'popular_repos.json')
 def get_top_repos(source: List[str],
                   tokens: List[str],
                   processes: int,
                   count: int,
-                  page_limit: int):
+                  page_limit: int,
+                  export: str):
     """
     Get top-n popular repositories among stargazers of source repositories
     and print them
-    :param source: list of URLs to GitHub source repositories
+    :param source: List of URLs to GitHub source repositories
+    (--source a --source b -> [a, b])
     :param tokens: GitHub API tokens to fetch information with
     :param processes: Number of processes to fetch starred repositories in
     :param count: Max amount of top popular repositories to get (top-100, top-10, etc.)
     :param page_limit: GitHub API page limit
+    :param export: Path to export json results to
     """
-    main_pipeline.append(
-        GatherPopularReposStage(
-            source_repos=source,
-            api_tokens=tokens,
-            max_popular_repos_num=count,
-            stargazers_fetch_process_count=processes,
-            page_limit=page_limit
-        )
+    extractor = PopularReposExtractor(
+        source_repos=source,
+        api_tokens=tokens,
+        max_popular_repos_num=count,
+        stargazers_fetch_process_count=processes,
+        page_limit=page_limit
     )
-    main_pipeline.run()
-    print(main_pipeline.get_stage_context(GatherPopularReposStage).popular_repositories)
+    extractor.run()
+    create_and_write(extractor.popular_repos, export)
 
 
 @simdev.command(name='clone', short_help='Clone repositories and fetch info about them')
@@ -73,24 +74,17 @@ def get_top_repos(source: List[str],
               default=['https://github.com/TheSeems/TMoney'],
               multiple=True,
               help='List of repositories to fetch information about')
-def clone_repos(source: List[str]):
+@click.option('--export', type=click.Path(dir_okay=False, file_okay=True),
+              default=Path('results') / 'repo_info.json')
+def clone_repos(source: List[str], export: str):
     """
     Clone repositories & print information about them
     :param source: list of URLs to GitHub repositories to clone and get info about
+    :param export: Path to export json results to
     """
-    main_pipeline.append(CloneStage(source))
-    main_pipeline.run()
-    stage_context: CloneContext = main_pipeline.get_stage_context(CloneStage)
-    repos = stage_context.repo_contexts
-    for repo in repos:
-        print(F'Repository {repo.url}')
-        for (contributor, contributor_context) in repo.contributors.items():
-            print(F'\t{contributor.name}:')
-            for (filename, file_context) in contributor_context.files.items():
-                print(F'\t\t[{file_context.prog_language}]', F'{filename}:',
-                      F'+{file_context.added_lines}', F'-{file_context.deleted_lines}')
-            print('')
-        print('')
+    extractor = RepoInfoExtractor()
+    extractor.extract(source)
+    create_and_write(extractor.dev_info, export)
 
 
 if __name__ == "__main__":
