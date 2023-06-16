@@ -65,7 +65,7 @@ def get_top_repos(source: List[str],
         stargazers_fetch_process_count=processes,
         page_limit=page_limit
     )
-    extractor.run()
+    extractor.extract()
     create_and_write(extractor.popular_repos, export)
 
 
@@ -83,6 +83,7 @@ def clone_repos(source: List[str], export: str) -> None:
     :param export: Path to export json results to
     """
     extractor = RepoInfoExtractor(source)
+    extractor.extract()
     create_and_write(extractor.dev_info, export)
 
 

@@ -48,11 +48,13 @@ docker build -t theseems/simdev:latest .
 - Запуск:
 
 ```shell
-docker run --name theseems_simdev -v cache:/app/cache theseems/simdev:latest <аргументы_cli>
+docker run -it --name theseems_simdev -v cache:/app/cache -v results:/app/results theseems/simdev:latest 
+python simdev/main.py <аргументы_cli>
 ```
 
 Таким образом (`-v ...`) мы передаем закешированные данные из папки `cache` корня
-проекта в окружение контейнера, откуда с ними может проводиться работа
+проекта в окружение контейнера, откуда с ними может проводиться работа.
+Результаты также прокидываются в контейнер (и из него) из папки `results`
 
 ## CLI
 <аргументы_cli>
