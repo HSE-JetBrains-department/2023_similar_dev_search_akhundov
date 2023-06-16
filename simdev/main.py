@@ -46,7 +46,7 @@ def get_top_repos(source: List[str],
                   processes: int,
                   count: int,
                   page_limit: int,
-                  export: str):
+                  export: str) -> None:
     """
     Get top-n popular repositories among stargazers of source repositories
     and print them
@@ -76,7 +76,7 @@ def get_top_repos(source: List[str],
               help='List of repositories to fetch information about')
 @click.option('--export', type=click.Path(dir_okay=False, file_okay=True),
               default=Path('results') / 'repo_info.json')
-def clone_repos(source: List[str], export: str):
+def clone_repos(source: List[str], export: str) -> None:
     """
     Clone repositories & print information about them
     :param source: list of URLs to GitHub repositories to clone and get info about
