@@ -15,7 +15,7 @@ class GitBasicsTest(unittest.TestCase):
         extractor = RepoInfoExtractor()
         extractor.extract([TEST_REPO_URL])
         dev_info = extractor.dev_info
-        dev = dev_info['me@theseems.ru']['https://github.com/TheSeems/HseNotebooks']
+        dev = dev_info['me@theseems.ru'][TEST_REPO_URL]
         files = dev['files']
 
         self.assertEqual(22, len(files))
