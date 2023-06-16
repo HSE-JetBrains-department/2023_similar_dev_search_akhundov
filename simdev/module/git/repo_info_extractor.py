@@ -4,7 +4,7 @@ import textwrap
 from typing import Dict, List, TypedDict
 
 from git import GitCommandError
-from pydriller import Repository
+from pydriller import ModifiedFile, Repository
 from tqdm import tqdm
 
 # Class for storing information about a single file: lines, variables, etc.
@@ -19,6 +19,17 @@ DevRepoInfo = TypedDict('DevRepoInfo', {'files': Dict[str, FileInfo]})
 # Type that embodies information about developers:
 # Developer identity (Email) -> Repository path -> Repository info
 DevInfo = Dict[str, Dict[str, DevRepoInfo]]
+
+
+def _handle_modified_file(file: ModifiedFile, repo_info: DevRepoInfo):
+    """
+    Account for a single modified file
+    :param file: to handle
+    :param repo_info: repo info containing info about files, langs etc.
+    """
+    file_info = repo_info['files'][file.filename]
+    file_info['added_lines'] += file.added_lines
+    file_info['deleted_lines'] += file.deleted_lines
 
 
 class RepoInfoExtractor:
@@ -73,9 +84,7 @@ class RepoInfoExtractor:
                         textwrap.shorten(file.filename, width=40),
                     )
                 )
-                file_info = self._dev_info[dev_email][repo_url]['files'][file.filename]
-                file_info['added_lines'] += file.added_lines
-                file_info['deleted_lines'] += file.deleted_lines
+                _handle_modified_file(file, self._dev_info[dev_email][repo_url])
 
     @property
     def dev_info(self) -> DevInfo:
