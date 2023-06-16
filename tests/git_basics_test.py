@@ -12,8 +12,8 @@ class GitBasicsTest(unittest.TestCase):
         PipelineCache.memory.clear()
 
     def test_public_repo(self):
-        extractor = RepoInfoExtractor()
-        extractor.extract([TEST_REPO_URL])
+        extractor = RepoInfoExtractor([TEST_REPO_URL])
+        extractor.extract()
         dev_info = extractor.dev_info
         dev = dev_info['me@theseems.ru'][TEST_REPO_URL]
         files = dev['files']
