@@ -38,10 +38,12 @@ class RepoInfoExtractor:
     commits, files (lines, variables etc.), developers
     """
 
-    def __init__(self):
+    def __init__(self, repo_urls: List[str]):
         """
         Init information about developers and their files information
+        :param repo_urls: list of URLs to GitHub repositories
         """
+        self.repo_urls = repo_urls
         # Information about developers:
         # Developer identity (Email) -> Repository path -> Repository info
         self._dev_info: DevInfo = defaultdict(
@@ -49,13 +51,12 @@ class RepoInfoExtractor:
                 lambda: DevRepoInfo(files=defaultdict(
                     lambda: FileInfo(added_lines=0, deleted_lines=0)))))
 
-    def extract(self, repo_urls: List[str]) -> None:
+    def extract(self) -> None:
         """
         Given the list of URLs to Git repositories to clone / fetch information about
         fulfill info about repositories and exclude faulty ones
-        :param repo_urls: list of URLs to GitHub repositories
         """
-        for repo_url in repo_urls:
+        for repo_url in self.repo_urls:
             try:
                 self._handle_single_repo(repo_url)
             except GitCommandError as exception:
