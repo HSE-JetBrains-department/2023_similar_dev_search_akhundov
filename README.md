@@ -57,10 +57,15 @@ python simdev/main.py <аргументы_cli>
 Результаты также прокидываются в контейнер (и из него) из папки `results`
 
 ## CLI
+
 <аргументы_cli>
 
 ### Популярные репозитории
-`top`: `top --source TheSeems/TMoney --processes 5 --count 5` (вычислить топ-5 популярных репозиториев среди поставивших звезду репозиторию TheSeems/TMoney, сбор информации о поставивших звезду проводится в 5 процессов)
+
+`top`: `top --source TheSeems/TMoney --processes 5 --count 5` (вычислить топ-5
+популярных репозиториев среди поставивших звезду репозиторию TheSeems/TMoney, сбор
+информации о поставивших звезду проводится в 5 процессов)
+
 ```text
   --source TEXT         List of initial repositories to get top starred by
                         stargazers of
@@ -72,13 +77,26 @@ python simdev/main.py <аргументы_cli>
 ```
 
 ### Клонирование репозиториев
-`clone`: `clone --source https://github.com/TheSeems/TMoney --source https://github.com/TheSeems/HseNotebooks` (склонировать репозитории TheSeems/TMoney, TheSeems/HseNotebooks, выдать информацию о коммитерах и об их файлах)
+
+`clone`: `clone --source https://github.com/TheSeems/TMoney --source https://github.com/TheSeems/HseNotebooks --limit 50 --export results/dev_info.json` (
+склонировать репозитории TheSeems/TMoney, TheSeems/HseNotebooks, обработать 50 коммитов из каждого,
+сохранить информацию о коммитерах и об их файлах в `results/dev_info.json`)
+
+`clone`: `clone --load results/popular_repos.json --limit 50 --export` (склонировать репозитории
+из `results/popular_repos.json`, обработать 50 коммитов из каждого, сохранить информацию о коммитерах и об их файлах
+в `results/dev_info.json`)
+
 ```text
 Options:
-  --source TEXT  List of repositories to fetch information about
+  --source TEXT    List of repositories to fetch information about
+  --limit INTEGER  Max amount of commits to process
+  --load FILE      Path to popular repositories to load repositories from.
+                   Overrides --source option
+  --export FILE    Path to store results to
 ```
 
 ### Поиск схожих разработчиков
+
 TBD...
 
 ## Автор

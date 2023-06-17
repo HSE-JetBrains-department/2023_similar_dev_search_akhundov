@@ -1,18 +1,16 @@
 import logging
 from pathlib import Path
-from typing import List
+from typing import Dict, List, Optional
 
 import click
 
 from simdev.module.git.repo_info_extractor import RepoInfoExtractor
 from simdev.module.github.popular_repos_extractor import PopularReposExtractor
-from simdev.util.export_utils import create_and_write
+from simdev.util.export_utils import create_and_write, read_json
+from simdev.util.url_utils import github_repo_name_to_url
 
 
 @click.group(invoke_without_command=True, no_args_is_help=True)
-@click.version_option(prog_name='simdev',
-                      message='simdev %(version)s',
-                      version='0.1')
 def simdev():
     """
     Similar developer search. Used to extract and transform open data (public
@@ -31,15 +29,24 @@ def simdev():
               default=['TheSeems/TMoney'],
               multiple=True,
               help='List of initial repositories to get top starred by stargazers of')
-@click.option('--tokens', default=None, multiple=True,
+@click.option('--tokens',
+              default=None,
+              multiple=True,
               help='List of GitHub API tokens to fetch information with')
-@click.option('--processes', default=6, type=int,
+@click.option('--processes',
+              default=6,
+              type=int,
               help='Number of processes to fetch starred repositories in')
-@click.option('--count', default=100, type=int,
+@click.option('--count',
+              default=100,
+              type=int,
               help='Max amount of top popular repositories to get')
-@click.option('--page_limit', default=400, type=int,
+@click.option('--page_limit',
+              default=400,
+              type=int,
               help='GitHub API page limit')
-@click.option('--export', type=click.Path(dir_okay=False, file_okay=True),
+@click.option('--export',
+              type=click.Path(dir_okay=False, file_okay=True),
               default=Path('results') / 'popular_repos.json')
 def get_top_repos(source: List[str],
                   tokens: List[str],
@@ -74,15 +81,37 @@ def get_top_repos(source: List[str],
               default=['https://github.com/TheSeems/TMoney'],
               multiple=True,
               help='List of repositories to fetch information about')
-@click.option('--export', type=click.Path(dir_okay=False, file_okay=True),
-              default=Path('results') / 'repo_info.json')
-def clone_repos(source: List[str], export: str) -> None:
+@click.option('--limit',
+              default=10_000,
+              type=int,
+              help='Max amount of commits to process')
+@click.option('--load',
+              default=None,
+              type=click.Path(dir_okay=False, file_okay=True, readable=True),
+              help='Path to popular repositories to load repositories from. '
+                   'Overrides --source option')
+@click.option('--export',
+              type=click.Path(dir_okay=False, file_okay=True),
+              default=Path('results') / 'dev_info.json',
+              help='Path to store results to')
+def clone_repos(source: List[str],
+                limit: int,
+                load: Optional[str],
+                export: str) -> None:
     """
     Clone repositories & print information about them
-    :param source: list of URLs to GitHub repositories to clone and get info about
+    :param source: List of URLs to GitHub repositories to clone and get info about
+    :param limit: Max amount of commits to process
+    :param load: Path to popular repositories to load repositories from.
+    Overrides --source option
     :param export: Path to export json results to
     """
-    extractor = RepoInfoExtractor(source)
+    if load is not None:
+        # Popular repositories dict from `top` command
+        popular_repos: Dict[str, int] = read_json(load)
+        # Converting GitHub notation to URLs
+        source = list(map(github_repo_name_to_url, popular_repos.keys()))
+    extractor = RepoInfoExtractor(repo_urls=source, max_commit_count=limit)
     extractor.extract()
     create_and_write(extractor.dev_info, export)
 
