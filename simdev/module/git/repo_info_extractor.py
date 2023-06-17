@@ -38,7 +38,7 @@ class RepoInfoExtractor:
     commits, files (lines, variables etc.), developers
     """
 
-    def __init__(self, repo_urls: List[str], max_commit_count: int):
+    def __init__(self, repo_urls: List[str], max_commit_count: int = 10_000):
         """
         Init information about developers and their files information
         :param repo_urls: list of URLs to GitHub repositories
