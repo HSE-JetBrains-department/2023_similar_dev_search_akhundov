@@ -152,4 +152,6 @@ def search(source: str, info: str, export: Optional[str], limit: int) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('pydriller.repository')
+    logger.setLevel(logging.WARN)
     simdev()
