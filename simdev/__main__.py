@@ -157,7 +157,7 @@ def search(source: str,
                                   max_results_count=limit,
                                   top_size=top_size)
     result = searcher.search(source)
-    create_and_write(result, export)
+    create_and_write(result, export, sort_keys=False)
 
 
 if __name__ == "__main__":
