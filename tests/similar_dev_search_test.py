@@ -7,7 +7,7 @@ from simdev.util.export_utils import read_json
 
 # String path to file containing sample dev info
 # in the same format as for the repo extractor
-TEST_DEV_INFO_PATH_STR = str(Path('data') / "test_dev_info.json")
+TEST_DEV_INFO_PATH_STR = str(Path(__file__).parent / Path('data') / "dev_info.json")
 
 
 class SimilarDevSearchTest(unittest.TestCase):
