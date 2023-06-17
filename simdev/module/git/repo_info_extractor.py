@@ -1,7 +1,7 @@
 from collections import Counter, defaultdict
 import logging
 import textwrap
-from typing import Dict, List, TypedDict
+from typing import Dict, List, Optional, TypedDict
 
 from git import GitCommandError
 from pydriller import ModifiedFile, Repository
@@ -37,9 +37,16 @@ def _handle_modified_file(file: ModifiedFile, repo_info: DevRepoInfo) -> None:
     file_info['added_lines'] += file.added_lines
     file_info['deleted_lines'] += file.deleted_lines
 
+    try:
+        content: Optional[bytes] = file.content
+    except ValueError:
+        # To avoid bad objects:
+        # ValueError: SHA b'...' could not be resolved, git returned: b'... missing'
+        return
+
     # Do not classify removed files
-    if file.new_path is not None:
-        lang = classify_language(file.filename, file.content, file.new_path)
+    if content is not None and file.new_path is not None:
+        lang = classify_language(file.filename, content, file.new_path)
         # If language is determined update the counter
         if lang is not None:
             repo_info['langs'].update([lang])
