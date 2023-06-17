@@ -20,17 +20,27 @@ class SimilarDevSearchTest(unittest.TestCase):
             self.assertEqual(len(self.dev_info) - 1, len(self.searcher.search(dev)))
 
     def test_clone(self):
-        similar = self.searcher.search('6543@obermui.de')
-        self.assertAlmostEqual(1, similar['clone_1_6543@obermui.de'])
-        self.assertAlmostEqual(1, similar['clone_2_6543@obermui.de'])
+        devs = self.searcher.search('6543@obermui.de')
+        self.assertAlmostEqual(1, devs['clone_1_6543@obermui.de']['score'])
+        self.assertAlmostEqual(1, devs['clone_2_6543@obermui.de']['score'])
 
     def test_abs_different(self):
-        similar = self.searcher.search('Maxim.Vasilev@jetbrains.com')
-        self.assertAlmostEqual(0, similar['David.Pordomingo.F@gmail.com'])
-        self.assertAlmostEqual(0, similar['clone_David.Pordomingo.F@gmail.com'])
+        devs = self.searcher.search('Maxim.Vasilev@jetbrains.com')
+        self.assertAlmostEqual(0, devs['David.Pordomingo.F@gmail.com']['score'])
+        self.assertAlmostEqual(0, devs['clone_David.Pordomingo.F@gmail.com']['score'])
 
     def test_limit(self):
         self.searcher = SimilarDevSearcher(self.dev_info, max_results_count=1)
-        results = self.searcher.search('David.Pordomingo.F@gmail.com')
-        self.assertEqual(1, len(results))
-        self.assertEqual('clone_David.Pordomingo.F@gmail.com', list(results.keys())[0])
+        devs = self.searcher.search('David.Pordomingo.F@gmail.com')
+        self.assertEqual(1, len(devs))
+        self.assertEqual('clone_David.Pordomingo.F@gmail.com', list(devs.keys())[0])
+
+    def test_top_meta(self):
+        devs = self.searcher.search('David.Pordomingo.F@gmail.com')
+        similar_dev = devs['6543@obermui.de']
+        self.assertEqual({"expected": 77, "name": 66, "path": 58, "test": 41, "t": 28},
+                         similar_dev['identifiers'])
+        self.assertEqual({"Go": 1}, similar_dev['langs'])
+        self.assertEqual({'https://github.com/theseems/HseNotebboks': 3,
+                          'https://github.com/theseems/go-enry': 1},
+                         devs['multiple@gmail.com']['repos'])

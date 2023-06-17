@@ -133,7 +133,14 @@ def clone_repos(source: List[str],
               default=10,
               help='How many developers to search for at most (with highest '
                    'similarity score)')
-def search(source: str, info: str, export: Optional[str], limit: int) -> None:
+@click.option('--top_size',
+              default=5,
+              help='Top-n meta params (languages, identifiers, repositories)')
+def search(source: str,
+           info: str,
+           export: Optional[str],
+           limit: int,
+           top_size: int) -> None:
     """
     Clone repositories & print information about them
     :param source: Email of the developer to find similar to
@@ -142,10 +149,13 @@ def search(source: str, info: str, export: Optional[str], limit: int) -> None:
     (json content: from developer to score that reflects the degree of similarity)
     :param limit: How many developers to search for at most
     (with the highest similarity score)
+    :param top_size: Top-n meta params (languages, identifiers, repositories)
     """
     if export is None:
         export = Path("results") / "similar" / F"{source}.json"
-    searcher = SimilarDevSearcher(dev_info=read_json(info), max_results_count=limit)
+    searcher = SimilarDevSearcher(dev_info=read_json(info),
+                                  max_results_count=limit,
+                                  top_size=top_size)
     result = searcher.search(source)
     create_and_write(result, export)
 

@@ -1,0 +1,162 @@
+{
+    "adam@gleave.me": {
+        "identifiers": {
+            "action": 18,
+            "env": 31,
+            "mode": 14,
+            "reset": 14,
+            "self": 173
+        },
+        "langs": {
+            "Python": 2
+        },
+        "repos": {
+            "https://github.com/openai/gym": 2
+        },
+        "score": 0.915658707429464
+    },
+    "alshedivat@users.noreply.github.com": {
+        "identifiers": {
+            "_elapsed_steps": 4,
+            "_episode_started_at": 4,
+            "env": 4,
+            "self": 26,
+            "time": 5
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.8023315685879326
+    },
+    "aryamc@fb.com": {
+        "identifiers": {
+            "args": 45,
+            "logging_output": 28,
+            "meters": 40,
+            "sample": 21,
+            "self": 234
+        },
+        "langs": {
+            "Python": 2
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 2
+        },
+        "score": 0.8027712997632707
+    },
+    "carpedm20@gmail.com": {
+        "identifiers": {
+            "error": 26,
+            "frame": 62,
+            "metadata": 30,
+            "path": 50,
+            "self": 244
+        },
+        "langs": {
+            "Python": 2
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.7994236231927025
+    },
+    "jonathan@pluslabs.org": {
+        "identifiers": {
+            "action": 6,
+            "close": 10,
+            "env": 8,
+            "mode": 7,
+            "self": 53
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.8767274682603391
+    },
+    "kosii@users.noreply.github.com": {
+        "identifiers": {
+            "action": 18,
+            "env": 24,
+            "observation": 11,
+            "reset": 12,
+            "self": 98
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.9949709454692599
+    },
+    "tdb.alcorn@gmail.com": {
+        "identifiers": {
+            "action": 18,
+            "env": 24,
+            "observation": 11,
+            "reset": 12,
+            "self": 93
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.9994455267478707
+    },
+    "unixpickle@gmail.com": {
+        "identifiers": {
+            "action": 18,
+            "env": 24,
+            "observation": 11,
+            "reset": 12,
+            "self": 96
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 2
+        },
+        "score": 0.9953613525696304
+    },
+    "willygdouglas@gmail.com": {
+        "identifiers": {
+            "action": 25,
+            "env": 24,
+            "np": 25,
+            "seed": 18,
+            "self": 226
+        },
+        "langs": {
+            "Python": 3
+        },
+        "repos": {
+            "https://github.com/openai/gym": 5
+        },
+        "score": 0.8479992387052284
+    },
+    "yulun.li2@gmail.com": {
+        "identifiers": {
+            "action": 18,
+            "env": 24,
+            "kwargs": 11,
+            "reset": 12,
+            "self": 94
+        },
+        "langs": {
+            "Python": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 1
+        },
+        "score": 0.9989837260420259
+    }
+}

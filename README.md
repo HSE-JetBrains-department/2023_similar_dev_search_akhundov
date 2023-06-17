@@ -79,11 +79,14 @@ docker run -it --rm --name theseems_simdev -v ${pwd}/simdev/cache:/app/cache -v 
 ### Клонирование репозиториев
 
 `clone`: `clone --source https://github.com/TheSeems/TMoney --source https://github.com/TheSeems/HseNotebooks --limit 50 --export results/dev_info.json` (
-склонировать репозитории TheSeems/TMoney, TheSeems/HseNotebooks, обработать 50 коммитов из каждого,
+склонировать репозитории TheSeems/TMoney, TheSeems/HseNotebooks, обработать 50 коммитов
+из каждого,
 сохранить информацию о коммитерах и об их файлах в `results/dev_info.json`)
 
-`clone`: `clone --load results/popular_repos.json --limit 50 --export` (склонировать репозитории
-из `results/popular_repos.json`, обработать 50 коммитов из каждого, сохранить информацию о коммитерах и об их файлах
+`clone`: `clone --load results/popular_repos.json --limit 50 --export` (склонировать
+репозитории
+из `results/popular_repos.json`, обработать 50 коммитов из каждого, сохранить информацию
+о коммитерах и об их файлах
 в `results/dev_info.json`)
 
 ```text
@@ -97,7 +100,29 @@ Options:
 
 ### Поиск схожих разработчиков
 
-TBD...
+`search`: `search 
+--source me@theseems.ru
+--info results/dev_info.json
+--limit 10
+--top_size 3
+--export results/similar/me@theseems.ru.json`
+(Поиск <=10 похожих разработчиков, похожих на me@theseems.ru среди результатов,
+подсчитанных ранее и
+сохраненных в results/dev_info.json с сохранением оценок и парамтров (топ-3 языков,
+идентификаторов, репозиториев) в
+results/similar/me@theseems.ru.json)
+
+```text
+  --source TEXT       Email of the developer to find similar developers to
+                      [required]
+  --info FILE         Path to dev info file (computer during `clone` command)
+                      [required]
+  --export FILE       Path to store results to
+  --limit INTEGER     How many developers to search for at most (with highest
+                      similarity score)
+  --top_size INTEGER  Top-n meta params (languages, identifiers, repositories)
+  --help              Show this message and exit.
+```
 
 ## Автор
 
