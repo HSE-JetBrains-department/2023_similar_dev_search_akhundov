@@ -1,4 +1,4 @@
-tqdm~=4.62.3
+tqdm==4.65.0
 PyDriller~=2.4
-requests~=2.30.0
+requests==2.31.0
 joblib~=1.2.0
