@@ -289,6 +289,40 @@
       }
     }
   },
+  "multiple@gmail.com": {
+    "https://github.com/theseems/HseNotebboks": {
+      "files": {
+        ".gitignore": {
+          "added_lines": 1,
+          "deleted_lines": 0
+        },
+        "Makefile": {
+          "added_lines": 13,
+          "deleted_lines": 8
+        },
+        "README.md": {
+          "added_lines": 3,
+          "deleted_lines": 3
+        }
+      },
+      "identifiers": {},
+      "langs": {
+        "Makefile": 3
+      }
+    },
+    "https://github.com/theseems/go-enry": {
+      "files": {
+        "Makefile": {
+          "added_lines": 13,
+          "deleted_lines": 8
+        }
+      },
+      "identifiers": {},
+      "langs": {
+        "Makefile": 3
+      }
+    }
+  },
   "Maxim.Vasilev@jetbrains.com": {
     "https://github.com/theseems/go-enry": {
       "files": {
