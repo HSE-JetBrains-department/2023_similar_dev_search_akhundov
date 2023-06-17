@@ -30,5 +30,5 @@ class GitBasicsTest(unittest.TestCase):
         self.assertEqual(1, len(dev_info))
 
         repo_info = dev_info['me@theseems.ru'][TEST_REPO_URL]
-        self.assertEqual(1, len(repo_info))
+        self.assertEqual(1, len(repo_info['files']))
         self.assertEqual('LICENSE', list(repo_info['files'].keys())[0])
