@@ -6,6 +6,7 @@ import click
 
 from simdev.module.git.repo_info_extractor import RepoInfoExtractor
 from simdev.module.github.popular_repos_extractor import PopularReposExtractor
+from simdev.module.simdev.similar_dev_searcher import SimilarDevSearcher
 from simdev.util.export_utils import create_and_write, read_json
 from simdev.util.url_utils import github_repo_name_to_url
 
@@ -114,6 +115,39 @@ def clone_repos(source: List[str],
     extractor = RepoInfoExtractor(repo_urls=source, max_commit_count=limit)
     extractor.extract()
     create_and_write(extractor.dev_info, export)
+
+
+@simdev.command(name='search', short_help='Search for developers similar for given dev')
+@click.option('--source',
+              help='Email of the developer to find similar developers to',
+              required=True)
+@click.option('--info',
+              type=click.Path(dir_okay=False, file_okay=True, exists=True),
+              required=True,
+              help='Path to dev info file (computer during `clone` command)')
+@click.option('--export',
+              type=click.Path(dir_okay=False, file_okay=True),
+              default=None,
+              help='Path to store results to')
+@click.option('--limit',
+              default=10,
+              help='How many developers to search for at most (with highest '
+                   'similarity score)')
+def search(source: str, info: str, export: Optional[str], limit: int) -> None:
+    """
+    Clone repositories & print information about them
+    :param source: Email of the developer to find similar to
+    :param info: Path to computed during clone developers info
+    :param export: Path to the result file
+    (json content: from developer to score that reflects the degree of similarity)
+    :param limit: How many developers to search for at most
+    (with the highest similarity score)
+    """
+    if export is None:
+        export = Path("results") / "similar" / F"{source}.json"
+    searcher = SimilarDevSearcher(dev_info=read_json(info), max_results_count=limit)
+    result = searcher.search(source)
+    create_and_write(result, export)
 
 
 if __name__ == "__main__":
