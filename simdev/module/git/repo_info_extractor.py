@@ -38,12 +38,14 @@ class RepoInfoExtractor:
     commits, files (lines, variables etc.), developers
     """
 
-    def __init__(self, repo_urls: List[str]):
+    def __init__(self, repo_urls: List[str], max_commit_count: int):
         """
         Init information about developers and their files information
         :param repo_urls: list of URLs to GitHub repositories
+        :param max_commit_count: max amount of commits to process
         """
         self.repo_urls = repo_urls
+        self.max_commit_count = max_commit_count
         # Information about developers:
         # Developer identity (Email) -> Repository path -> Repository info
         self._dev_info: DevInfo = defaultdict(
@@ -75,7 +77,9 @@ class RepoInfoExtractor:
         """
         repo = Repository(repo_url)
         commits = tqdm(repo.traverse_commits(), desc=repo_url)
-        for commit in commits:
+        for index, commit in enumerate(commits):
+            if index >= self.max_commit_count:
+                break
             dev_email = commit.author.email
             for file in commit.modified_files:
                 commits.set_postfix_str(
