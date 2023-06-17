@@ -1,0 +1,805 @@
+{
+    "spoff@fb.com": {
+        "score": 0.9971453272465215,
+        "identifiers": {
+            "self": 779,
+            "args": 525,
+            "getattr": 138,
+            "torch": 86,
+            "state_dict": 75
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 12
+        }
+    },
+    "mattle@fb.com": {
+        "score": 0.996461995343374,
+        "identifiers": {
+            "args": 820,
+            "self": 653,
+            "data_dir": 262,
+            "getattr": 225,
+            "x": 152
+        },
+        "langs": {
+            "Python": 10
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 7
+        }
+    },
+    "aimeeli@fb.com": {
+        "score": 0.9960733746922341,
+        "identifiers": {
+            "self": 613,
+            "args": 315,
+            "torch": 95,
+            "nn": 69,
+            "i": 63
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 10
+        }
+    },
+    "sai-prasanna@users.noreply.github.com": {
+        "score": 0.9960494015284759,
+        "identifiers": {
+            "self": 345,
+            "args": 324,
+            "x": 267,
+            "dropout": 99,
+            "state": 91
+        },
+        "langs": {
+            "Python": 6
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 3
+        }
+    },
+    "jingfeidu@fb.com": {
+        "score": 0.9960032618916848,
+        "identifiers": {
+            "args": 406,
+            "self": 360,
+            "data_dir": 136,
+            "getattr": 113,
+            "parser": 70
+        },
+        "langs": {
+            "Python": 10
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 10
+        }
+    },
+    "sarthak_garg@apple.com": {
+        "score": 0.9958701705705925,
+        "identifiers": {
+            "self": 795,
+            "args": 535,
+            "add_argument": 172,
+            "x": 171,
+            "data_dir": 169
+        },
+        "langs": {
+            "Python": 17
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 19
+        }
+    },
+    "namangoyal@learnfair1595.h2.fair": {
+        "score": 0.9956531820863284,
+        "identifiers": {
+            "self": 509,
+            "args": 312,
+            "state": 65,
+            "trainer": 56,
+            "epoch": 48
+        },
+        "langs": {
+            "Python": 9
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 9
+        }
+    },
+    "roller@fb.com": {
+        "score": 0.9955403423900461,
+        "identifiers": {
+            "self": 895,
+            "args": 432,
+            "x": 187,
+            "torch": 149,
+            "hypos": 141
+        },
+        "langs": {
+            "Python": 11
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 7
+        }
+    },
+    "angela.h.fan@gmail.com": {
+        "score": 0.9955342589879222,
+        "identifiers": {
+            "self": 1494,
+            "args": 1231,
+            "x": 501,
+            "add_argument": 298,
+            "help": 298
+        },
+        "langs": {
+            "Python": 28
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 22
+        }
+    },
+    "pipibjc@fb.com": {
+        "score": 0.9953868659176744,
+        "identifiers": {
+            "self": 1652,
+            "args": 1645,
+            "x": 411,
+            "getattr": 321,
+            "parser": 292
+        },
+        "langs": {
+            "Python": 27
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 18
+        }
+    },
+    "yibairen.byron@bytedance.com": {
+        "score": 0.9953765205103299,
+        "identifiers": {
+            "self": 432,
+            "args": 327,
+            "data_dir": 131,
+            "x": 126,
+            "lang_pair": 75
+        },
+        "langs": {
+            "Python": 8
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 9
+        }
+    },
+    "jgu@fb.com": {
+        "score": 0.9952677056646138,
+        "identifiers": {
+            "args": 931,
+            "self": 622,
+            "getattr": 359,
+            "add_argument": 293,
+            "help": 281
+        },
+        "langs": {
+            "Python": 16
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 11
+        }
+    },
+    "pipibjc@devfair0209.h2.fair": {
+        "score": 0.9950761222860469,
+        "identifiers": {
+            "self": 652,
+            "args": 258,
+            "lang_pair": 89,
+            "tgt": 80,
+            "split": 68
+        },
+        "langs": {
+            "Python": 12
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 12
+        }
+    },
+    "noreplyspamblackhole@gmail.com": {
+        "score": 0.99506397092574,
+        "identifiers": {
+            "self": 1249,
+            "args": 372,
+            "meters": 161,
+            "logging_output": 152,
+            "group": 151
+        },
+        "langs": {
+            "Python": 11
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 10
+        }
+    },
+    "kartikayk@fb.com": {
+        "score": 0.9950564036589892,
+        "identifiers": {
+            "self": 708,
+            "x": 229,
+            "args": 226,
+            "torch": 104,
+            "nn": 102
+        },
+        "langs": {
+            "Python": 23
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 16
+        }
+    },
+    "oxo@fb.com": {
+        "score": 0.995035522880675,
+        "identifiers": {
+            "self": 829,
+            "args": 580,
+            "data_dir": 228,
+            "x": 149,
+            "add_argument": 138
+        },
+        "langs": {
+            "Python": 23
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 31
+        }
+    },
+    "jcai@fb.com": {
+        "score": 0.9950030303469409,
+        "identifiers": {
+            "self": 615,
+            "args": 192,
+            "state": 139,
+            "torch": 75,
+            "p": 73
+        },
+        "langs": {
+            "Python": 15
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 22
+        }
+    },
+    "vladk@fb.com": {
+        "score": 0.9949279081935679,
+        "identifiers": {
+            "self": 271,
+            "args": 227,
+            "i": 72,
+            "state": 60,
+            "f": 58
+        },
+        "langs": {
+            "Python": 12
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 13
+        }
+    },
+    "davide@modernmt.eu": {
+        "score": 0.9949183007810336,
+        "identifiers": {
+            "self": 682,
+            "args": 355,
+            "add_argument": 160,
+            "help": 158,
+            "path": 148
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 12
+        }
+    },
+    "dnn@fb.com": {
+        "score": 0.9949053675394526,
+        "identifiers": {
+            "self": 737,
+            "args": 286,
+            "x": 206,
+            "torch": 189,
+            "size": 112
+        },
+        "langs": {
+            "Python": 19
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 16
+        }
+    },
+    "ngoyal2707@users.noreply.github.com": {
+        "score": 0.9948253766146239,
+        "identifiers": {
+            "self": 349,
+            "args": 301,
+            "x": 86,
+            "getattr": 85,
+            "tokens": 59
+        },
+        "langs": {
+            "Python": 7
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 11
+        }
+    },
+    "naysing@fb.com": {
+        "score": 0.9946951832024782,
+        "identifiers": {
+            "self": 906,
+            "add_argument": 265,
+            "group": 262,
+            "help": 261,
+            "args": 214
+        },
+        "langs": {
+            "Python": 15
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 9
+        }
+    },
+    "freewym@gmail.com": {
+        "score": 0.9943338090904635,
+        "identifiers": {
+            "self": 472,
+            "args": 252,
+            "stats": 135,
+            "trainer": 106,
+            "epoch": 94
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 11
+        }
+    },
+    "changhan@fb.com": {
+        "score": 0.9942467390005322,
+        "identifiers": {
+            "self": 1409,
+            "args": 1325,
+            "getattr": 457,
+            "x": 426,
+            "encoder_out": 245
+        },
+        "langs": {
+            "Python": 28,
+            "C++": 1
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 25
+        }
+    },
+    "edunov@apache.org": {
+        "score": 0.9942327861900915,
+        "identifiers": {
+            "self": 1139,
+            "args": 996,
+            "add_argument": 277,
+            "help": 276,
+            "group": 235
+        },
+        "langs": {
+            "Python": 40
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 30
+        }
+    },
+    "louisrtm@gmail.com": {
+        "score": 0.994147771742594,
+        "identifiers": {
+            "self": 295,
+            "args": 168,
+            "source_dictionary": 71,
+            "src_dataset": 63,
+            "parser": 55
+        },
+        "langs": {
+            "Python": 9
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 10
+        }
+    },
+    "lie@fb.com": {
+        "score": 0.9941316602484495,
+        "identifiers": {
+            "self": 1632,
+            "args": 1243,
+            "x": 835,
+            "data_dir": 388,
+            "getattr": 339
+        },
+        "langs": {
+            "Python": 39
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 19
+        }
+    },
+    "louismartin@users.noreply.github.com": {
+        "score": 0.9940841017031913,
+        "identifiers": {
+            "args": 391,
+            "self": 180,
+            "format": 129,
+            "dataset": 125,
+            "add_argument": 81
+        },
+        "langs": {
+            "Python": 14
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 10
+        }
+    },
+    "louismartin@fb.com": {
+        "score": 0.9939052304584319,
+        "identifiers": {
+            "self": 243,
+            "args": 171,
+            "format": 71,
+            "beam_size": 63,
+            "len": 62
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 13
+        }
+    },
+    "davide.caroselli@translated.net": {
+        "score": 0.9938609509215748,
+        "identifiers": {
+            "args": 681,
+            "add_argument": 421,
+            "help": 417,
+            "group": 389,
+            "default": 311
+        },
+        "langs": {
+            "Python": 20
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 15
+        }
+    },
+    "namangoyal@devfair0110.h2.fair": {
+        "score": 0.9937973589677455,
+        "identifiers": {
+            "args": 1834,
+            "self": 1723,
+            "getattr": 399,
+            "parser": 288,
+            "add_argument": 249
+        },
+        "langs": {
+            "Python": 58
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 41
+        }
+    },
+    "zuoxingdong@users.noreply.github.com": {
+        "score": 0.9934177795683192,
+        "identifiers": {
+            "self": 884,
+            "spaces": 201,
+            "space": 135,
+            "env": 134,
+            "np": 121
+        },
+        "langs": {
+            "Python": 34
+        },
+        "repos": {
+            "https://github.com/openai/gym": 22,
+            "https://github.com/pytorch/examples": 2
+        }
+    },
+    "joschu@openai.com": {
+        "score": 0.9933462269335179,
+        "identifiers": {
+            "self": 1831,
+            "env": 556,
+            "action": 197,
+            "os": 163,
+            "observation": 157
+        },
+        "langs": {
+            "Python": 31
+        },
+        "repos": {
+            "https://github.com/openai/gym": 15
+        }
+    },
+    "a@machinaut.com": {
+        "score": 0.9933429435643063,
+        "identifiers": {
+            "self": 549,
+            "model": 111,
+            "np": 110,
+            "data": 89,
+            "gym": 67
+        },
+        "langs": {
+            "Python": 25
+        },
+        "repos": {
+            "https://github.com/openai/gym": 26
+        }
+    },
+    "ofirnachum@gmail.com": {
+        "score": 0.993289638801141,
+        "identifiers": {
+            "self": 1491,
+            "tf": 619,
+            "np": 124,
+            "i": 105,
+            "batch_size": 102
+        },
+        "langs": {
+            "Python": 17
+        },
+        "repos": {
+            "https://github.com/tensorflow/models": 17
+        }
+    },
+    "halilakin@fb.com": {
+        "score": 0.9932835417200857,
+        "identifiers": {
+            "self": 920,
+            "args": 154,
+            "k": 129,
+            "meters": 109,
+            "torch": 105
+        },
+        "langs": {
+            "Python": 8
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 4
+        }
+    },
+    "tlb@tlb.org": {
+        "score": 0.9932548014612685,
+        "identifiers": {
+            "self": 2741,
+            "os": 198,
+            "path": 197,
+            "env": 195,
+            "np": 193
+        },
+        "langs": {
+            "Python": 48
+        },
+        "repos": {
+            "https://github.com/openai/gym": 29
+        }
+    },
+    "omgtech@gmail.com": {
+        "score": 0.9931763152383817,
+        "identifiers": {
+            "self": 3406,
+            "SCALE": 540,
+            "i": 521,
+            "np": 505,
+            "x": 415
+        },
+        "langs": {
+            "Python": 37
+        },
+        "repos": {
+            "https://github.com/openai/gym": 14
+        }
+    },
+    "taylanbil@google.com": {
+        "score": 0.9931749743206618,
+        "identifiers": {
+            "self": 359,
+            "args": 231,
+            "x": 131,
+            "getattr": 61,
+            "stats": 56
+        },
+        "langs": {
+            "Python": 5
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 5
+        }
+    },
+    "antonin.raffin@ensta.org": {
+        "score": 0.9931121854577047,
+        "identifiers": {
+            "self": 647,
+            "np": 135,
+            "s": 66,
+            "viewer": 56,
+            "x": 50
+        },
+        "langs": {
+            "Python": 11
+        },
+        "repos": {
+            "https://github.com/openai/gym": 12
+        }
+    },
+    "colin.morris2@gmail.com": {
+        "score": 0.9930339600362544,
+        "identifiers": {
+            "self": 433,
+            "id": 105,
+            "env": 95,
+            "spec": 66,
+            "add_task": 58
+        },
+        "langs": {
+            "Python": 16
+        },
+        "repos": {
+            "https://github.com/openai/gym": 17
+        }
+    },
+    "damienv@google.com": {
+        "score": 0.993033266064589,
+        "identifiers": {
+            "self": 811,
+            "tf": 395,
+            "x": 254,
+            "shape": 178,
+            "y": 132
+        },
+        "langs": {
+            "Python": 38
+        },
+        "repos": {
+            "https://github.com/tensorflow/models": 32
+        }
+    },
+    "rvarm1@fb.com": {
+        "score": 0.9929701850059015,
+        "identifiers": {
+            "self": 567,
+            "x": 427,
+            "args": 290,
+            "torch": 287,
+            "num_gpus": 235
+        },
+        "langs": {
+            "Python": 18
+        },
+        "repos": {
+            "https://github.com/pytorch/examples": 3
+        }
+    },
+    "franciscomatias@alu.ufc.br": {
+        "score": 0.9929525374447049,
+        "identifiers": {
+            "self": 320,
+            "i": 81,
+            "u": 77,
+            "g": 70,
+            "add_edge": 60
+        },
+        "langs": {
+            "Python": 17
+        },
+        "repos": {
+            "https://github.com/TheAlgorithms/Python": 8
+        }
+    },
+    "matthiasplappert@me.com": {
+        "score": 0.9928712355924803,
+        "identifiers": {
+            "self": 954,
+            "np": 296,
+            "sim": 203,
+            "register": 200,
+            "id": 198
+        },
+        "langs": {
+            "Python": 45
+        },
+        "repos": {
+            "https://github.com/openai/gym": 75
+        }
+    },
+    "JKCooper2@users.noreply.github.com": {
+        "score": 0.9928529582073289,
+        "identifiers": {
+            "self": 544,
+            "id": 141,
+            "np": 78,
+            "add_task": 65,
+            "group": 64
+        },
+        "langs": {
+            "Python": 15
+        },
+        "repos": {
+            "https://github.com/openai/gym": 11
+        }
+    },
+    "alexei.b@gmail.com": {
+        "score": 0.9928273994633733,
+        "identifiers": {
+            "self": 9772,
+            "args": 9052,
+            "x": 4452,
+            "add_argument": 1684,
+            "help": 1684
+        },
+        "langs": {
+            "Python": 205
+        },
+        "repos": {
+            "https://github.com/facebookresearch/fairseq": 72
+        }
+    },
+    "nottombrown@gmail.com": {
+        "score": 0.9928026702954013,
+        "identifiers": {
+            "self": 1295,
+            "env": 694,
+            "id": 389,
+            "gym": 202,
+            "register": 201
+        },
+        "langs": {
+            "Python": 54
+        },
+        "repos": {
+            "https://github.com/openai/gym": 32
+        }
+    },
+    "8325708+alok@users.noreply.github.com": {
+        "score": 0.9927542798947528,
+        "identifiers": {
+            "self": 261,
+            "x": 61,
+            "spaces": 59,
+            "np": 52,
+            "gym": 51
+        },
+        "langs": {
+            "Python": 13
+        },
+        "repos": {
+            "https://github.com/openai/gym": 7
+        }
+    },
+    "john.d.schulman@gmail.com": {
+        "score": 0.9927131358936431,
+        "identifiers": {
+            "self": 4283,
+            "np": 576,
+            "gym": 317,
+            "id": 316,
+            "env": 312
+        },
+        "langs": {
+            "Python": 120,
+            "Text": 1
+        },
+        "repos": {
+            "https://github.com/openai/gym": 101
+        }
+    }
+}
