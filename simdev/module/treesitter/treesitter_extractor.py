@@ -28,10 +28,6 @@ class TreeSitterExtractor:
     crafting parsers for them
     """
 
-    # String the GitHub Repository URL starts with
-    # Used to strip the repository url to get the correct name for bindings
-    GITHUB_URL_PREFIX = "https://github.com/"
-
     # Default associations from language name to GitHub Repository of the bindings URL
     # Key must be one of enry classified languages names
     DEFAULT_LANG_BINDINGS = {
