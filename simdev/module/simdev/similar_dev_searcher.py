@@ -66,7 +66,6 @@ class SimilarDevSearcher:
             similar_info = results[dev_email]
             similar_info['score'] = sorted_scores[dev_email]
             self._write_top_meta(dev_email, similar_info)
-
         return results
 
     def _vectorize_identifiers(self) -> Tuple[np.matrix, np.ndarray]:
