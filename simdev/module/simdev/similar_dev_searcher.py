@@ -54,7 +54,7 @@ class SimilarDevSearcher:
                                      reverse=True)[:self.max_results_count])
         return sorted_results
 
-    def _vectorize_identifiers(self) -> Tuple[np.matrix[float], np.ndarray[str]]:
+    def _vectorize_identifiers(self) -> Tuple[np.matrix, np.ndarray]:
         """
         Collect identifier frequencies, unroll them to text and
         perform tfidf vectorization on identifier names
@@ -77,7 +77,7 @@ class SimilarDevSearcher:
         identifier_feature_names = vectorizer.get_feature_names_out()
         return identifier_vectors, identifier_feature_names
 
-    def _vectorize_langs(self) -> Tuple[np.matrix[int], np.ndarray[str]]:
+    def _vectorize_langs(self) -> Tuple[np.matrix, np.ndarray]:
         """
         Collect languages and form a matrix out of them for all the developers
         using DictVectorizer
