@@ -86,8 +86,8 @@ class TreeSitterExtractor:
         # Cache language-related functions
         self._build_language_parser = \
             PipelineCache.memory.cache(self._make_language_and_parser)
-        self._clone_language_binding = \
-            PipelineCache.memory.cache(self._clone_language_binding)
+        self._clone_language_bindings = \
+            PipelineCache.memory.cache(self._clone_language_bindings)
 
     def prepare(self) -> None:
         """
@@ -98,7 +98,7 @@ class TreeSitterExtractor:
         lang_progress = tqdm(self.lang_bindings.keys(), 'Clone tree-sitter bindings')
         for lang in lang_progress:
             lang_progress.set_postfix_str(lang)
-            self._clone_language_binding(lang)
+            self._clone_language_bindings(lang)
 
         lang_progress.set_description('Building...')
         Language.build_library(output_path=str(self._get_shared_object_file_path()),
@@ -154,7 +154,7 @@ class TreeSitterExtractor:
         traverse_extract(parsed_tree.root_node)
         return counter
 
-    def _clone_language_binding(self, lang: str):
+    def _clone_language_bindings(self, lang: str):
         """
         Clone language bindings repository
         :param lang: language to clone bindings for
