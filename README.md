@@ -1,4 +1,5 @@
-![Lint and test](https://github.com/HSE-JetBrains-department/2023_similar_dev_search_akhundov/actions/workflows/lint_and_test.yml/badge.svg)
+![Lint](https://github.com/HSE-JetBrains-department/2023_similar_dev_search_akhundov/actions/workflows/lint.yml/badge.svg)  
+![Test](https://github.com/HSE-JetBrains-department/2023_similar_dev_search_akhundov/actions/workflows/test.yml/badge.svg)
 
 ---
 
