@@ -35,7 +35,7 @@ pip install -r requirements.txt
 - Запуск:
 
 ```shell
-python simdev/main.py <аргументы_cli>
+python -m simdev <аргументы_cli>
 ```
 
 ### Docker
