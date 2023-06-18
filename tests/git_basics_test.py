@@ -55,9 +55,14 @@ class GitBasicsTest(unittest.TestCase):
         repo_info = extractor.dev_info['bzz@apache.org'][TEST_LANGUAGES_REPO_URL]
         identifiers = repo_info['identifiers']
         self.assertTrue(
-            {'string': 4115, 'name': 2941, 'expected': 2657, 'content': 2252,
-             'filename': 2078, 'test': 1974, 'err': 1867, 's': 1795, 'byte': 1573,
-             'filepath': 1403, 'Join': 1275, 'language': 1073, '_': 832, 'T': 814,
-             'languages': 729, 'candidates': 697, 'assert': 549, 'samplesDir': 547,
-             'commit': 538, 'path': 520, 'fmt': 485
-             }.items() <= dict(identifiers).items())
+            {'OtherLanguage': 151, 'Strategy': 47, 'filename': 2078, 'string': 4115,
+             'content': 2252, 'byte': 1573, 'candidates': 697, 'languages': 729,
+             'DefaultStrategies': 20, 'GetLanguagesByModeline': 71,
+             'GetLanguagesByFilename': 57, 'GetLanguagesByShebang': 57,
+             'GetLanguagesByExtension': 57, 'GetLanguagesByContent': 44,
+             'GetLanguagesByClassifier': 44, 'DefaultClassifier': 37, 'Classifier': 24,
+             'classifier': 203, 'languagesLogProbabilities': 26, 'data': 447,
+             'LanguagesLogProbabilities': 10, 'tokensLogProbabilities': 18,
+             'TokensLogProbabilities': 10, 'tokensTotal': 39, 'TokensTotal': 26,
+             'GetLanguage': 89, 'language': 1073}
+            .items() <= dict(identifiers).items())
