@@ -48,7 +48,7 @@ docker build -t theseems/simdev:latest .
 - Запуск:
 
 ```shell
-docker run -it --rm --name theseems_simdev -v cache:/app/cache -v results:/app/results theseems/simdev:latest <аргументы_cli>
+docker run -it --rm --name theseems_simdev -v ${pwd}/simdev/cache:/app/cache -v ${pwd}/simdev/results:/app/results theseems/simdev:latest <аргументы_cli>
 ```
 
 Таким образом (`-v ...`) мы передаем закешированные данные из папки `cache` корня
