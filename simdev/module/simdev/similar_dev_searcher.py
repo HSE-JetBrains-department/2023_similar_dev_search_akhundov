@@ -65,7 +65,7 @@ class SimilarDevSearcher:
         for dev_email in sorted_scores:
             similar_info = results[dev_email]
             similar_info['score'] = sorted_scores[dev_email]
-            self._write_top_meta(dev_email, similar_info)
+            self._write_top_params(dev_email, similar_info)
         return results
 
     def _vectorize_identifiers(self) -> Tuple[np.matrix, np.ndarray]:
@@ -127,9 +127,10 @@ class SimilarDevSearcher:
                         reverse=True)[:self.max_results_count])
         return sorted_scores
 
-    def _write_top_meta(self, dev_email: str, result: SimilarDevInfo) -> None:
+    def _write_top_params(self, dev_email: str, result: SimilarDevInfo) -> None:
         """
-        Write most frequently used identifiers
+        Write most frequently used params: languages, identifiers
+        and repositories (based on the file count modified in them)
         :param dev_email: dev email to write info about
         :param result: to write top meta params to
         :return: dict of most common identifiers
