@@ -22,4 +22,4 @@ COPY simdev simdev
 
 ENV PYTHONPATH "/app"
 
-ENTRYPOINT ["python3", "simdev/main.py"]
+ENTRYPOINT ["python3", "-m", "simdev"]
