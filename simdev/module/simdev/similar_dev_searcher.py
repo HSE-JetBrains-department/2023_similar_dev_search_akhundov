@@ -132,7 +132,7 @@ class SimilarDevSearcher:
         Write most frequently used params: languages, identifiers
         and repositories (based on the file count modified in them)
         :param dev_email: dev email to write info about
-        :param result: to write top meta params to
+        :param result: to write top params to
         :return: dict of most common identifiers
         """
         identifiers_counter = Counter({})

@@ -35,7 +35,7 @@ class SimilarDevSearchTest(unittest.TestCase):
         self.assertEqual(1, len(devs))
         self.assertEqual('clone_David.Pordomingo.F@gmail.com', list(devs.keys())[0])
 
-    def test_top_meta(self):
+    def test_top_params(self):
         devs = self.searcher.search('David.Pordomingo.F@gmail.com')
         similar_dev = devs['6543@obermui.de']
         self.assertEqual({"expected": 77, "name": 66, "path": 58, "test": 41, "t": 28},

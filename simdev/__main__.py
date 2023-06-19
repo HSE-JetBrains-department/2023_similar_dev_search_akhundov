@@ -135,7 +135,8 @@ def clone_repos(source: List[str],
                    'similarity score)')
 @click.option('--top_size',
               default=5,
-              help='Top-n meta params (languages, identifiers, repositories)')
+              help='Top-n params most frequently used: languages, identifiers, '
+                   'repositories')
 def search(source: str,
            info: str,
            export: Optional[str],
@@ -149,7 +150,7 @@ def search(source: str,
     (json content: from developer to score that reflects the degree of similarity)
     :param limit: How many developers to search for at most
     (with the highest similarity score)
-    :param top_size: Top-n meta params (languages, identifiers, repositories)
+    :param top_size: Top-n params: languages, identifiers, repositories
     """
     if export is None:
         export = Path("results") / "similar" / F"{source}.json"

@@ -115,7 +115,7 @@ results/similar/me@theseems.ru.json)
   --export FILE       Path to store results to
   --limit INTEGER     How many developers to search for at most (with highest
                       similarity score)
-  --top_size INTEGER  Top-n meta params (languages, identifiers, repositories)
+  --top_size INTEGER  Top-n params: languages, identifiers, repositories
   --help              Show this message and exit.
 ```
 
