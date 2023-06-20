@@ -47,6 +47,9 @@ class SimilarDevSearcher:
         frequently used identifiers, repositories - top-n repositories based on
         file count
         """
+        if dev_email not in self.dev_info:
+            raise ValueError(F"Email {dev_email} is not found in provided developers")
+
         identifier_vectors, identifier_feature_names = self._vectorize_identifiers()
         lang_vectors, lang_feature_names = self._vectorize_langs()
         df = pd.DataFrame(
@@ -135,9 +138,9 @@ class SimilarDevSearcher:
         :param result: to write top params to
         :return: dict of most common identifiers
         """
-        identifiers_counter = Counter({})
-        langs_counter = Counter({})
-        repos_counter = Counter({})
+        identifiers_counter = Counter()
+        langs_counter = Counter()
+        repos_counter = Counter()
         for repo, repo_info in self.dev_info[dev_email].items():
             identifiers_counter.update(repo_info['identifiers'])
             langs_counter.update(repo_info['langs'])
