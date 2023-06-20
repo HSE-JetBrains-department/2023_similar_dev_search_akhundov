@@ -1,0 +1,788 @@
+{
+    "jeffmo@fb.com": {
+        "score": 0.9999803320209044,
+        "identifiers": {
+            "props": 1676,
+            "require": 1622,
+            "expect": 1588,
+            "id": 1268,
+            "instance": 1211
+        },
+        "langs": {
+            "JavaScript": 356,
+            "Diff": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 131
+        }
+    },
+    "yungsters@fb.com": {
+        "score": 0.9999704662005406,
+        "identifiers": {
+            "require": 362,
+            "props": 276,
+            "name": 271,
+            "key": 225,
+            "expect": 222
+        },
+        "langs": {
+            "JavaScript": 86
+        },
+        "repos": {
+            "https://github.com/facebook/react": 72
+        }
+    },
+    "pete@instagram.com": {
+        "score": 0.9999504592063093,
+        "identifiers": {
+            "expect": 504,
+            "require": 331,
+            "instance": 301,
+            "toBe": 300,
+            "React": 245
+        },
+        "langs": {
+            "JavaScript": 67
+        },
+        "repos": {
+            "https://github.com/facebook/react": 54
+        }
+    },
+    "poshannessy@fb.com": {
+        "score": 0.9998997272381548,
+        "identifiers": {
+            "require": 272,
+            "expect": 268,
+            "name": 247,
+            "instance": 228,
+            "props": 199
+        },
+        "langs": {
+            "JavaScript": 51
+        },
+        "repos": {
+            "https://github.com/facebook/react": 35
+        }
+    },
+    "ljharb@gmail.com": {
+        "score": 0.9998677509141818,
+        "identifiers": {
+            "t": 98,
+            "exports": 59,
+            "module": 59,
+            "result": 40,
+            "test": 30
+        },
+        "langs": {
+            "JavaScript": 66
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 21
+        }
+    },
+    "paul@oshannessy.com": {
+        "score": 0.9998122837664184,
+        "identifiers": {
+            "expect": 851,
+            "require": 691,
+            "jasmine": 546,
+            "toBe": 489,
+            "i": 402
+        },
+        "langs": {
+            "JavaScript": 236,
+            "Ruby": 4,
+            "CSS": 1,
+            "HTML": 1,
+            "Shell": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 450
+        }
+    },
+    "jordanjcw@fb.com": {
+        "score": 0.9997100675858847,
+        "identifiers": {
+            "expect": 484,
+            "toBe": 256,
+            "require": 213,
+            "props": 191,
+            "key": 177
+        },
+        "langs": {
+            "JavaScript": 35
+        },
+        "repos": {
+            "https://github.com/facebook/react": 33
+        }
+    },
+    "josh@fb.com": {
+        "score": 0.9995488862695504,
+        "identifiers": {
+            "topLevelTypes": 248,
+            "keyOf": 228,
+            "require": 175,
+            "start": 143,
+            "end": 132
+        },
+        "langs": {
+            "JavaScript": 31
+        },
+        "repos": {
+            "https://github.com/facebook/react": 17
+        }
+    },
+    "hi@hshoff.com": {
+        "score": 0.9992473121284355,
+        "identifiers": {
+            "exports": 24,
+            "module": 24,
+            "t": 21,
+            "result": 10,
+            "test": 6
+        },
+        "langs": {
+            "JavaScript": 26
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 12
+        }
+    },
+    "pete.hunt@fb.com": {
+        "score": 0.9992022951740904,
+        "identifiers": {
+            "props": 132,
+            "require": 120,
+            "transaction": 99,
+            "expect": 88,
+            "MUST_USE_PROPERTY": 79
+        },
+        "langs": {
+            "JavaScript": 22
+        },
+        "repos": {
+            "https://github.com/facebook/react": 30
+        }
+    },
+    "benjamn@fb.com": {
+        "score": 0.9990940463665429,
+        "identifiers": {
+            "id": 239,
+            "refs": 221,
+            "parent": 152,
+            "expect": 145,
+            "container": 123
+        },
+        "langs": {
+            "JavaScript": 22
+        },
+        "repos": {
+            "https://github.com/facebook/react": 13
+        }
+    },
+    "chenglou92@gmail.com": {
+        "score": 0.9985188033086171,
+        "identifiers": {
+            "value": 103,
+            "node": 91,
+            "expect": 86,
+            "d": 83,
+            "props": 80
+        },
+        "langs": {
+            "JavaScript": 17
+        },
+        "repos": {
+            "https://github.com/facebook/react": 88
+        }
+    },
+    "jake.tl@airbnb.com": {
+        "score": 0.9982817155050255,
+        "identifiers": {
+            "t": 48,
+            "result": 20,
+            "eslintrc": 16,
+            "exports": 14,
+            "module": 14
+        },
+        "langs": {
+            "JavaScript": 17
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 12
+        }
+    },
+    "tesrin@gmail.com": {
+        "score": 0.9982674872304564,
+        "identifiers": {
+            "t": 48,
+            "result": 20,
+            "exports": 14,
+            "module": 14,
+            "test": 14
+        },
+        "langs": {
+            "JavaScript": 17
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 16
+        }
+    },
+    "sema@fb.com": {
+        "score": 0.9980808963665775,
+        "identifiers": {
+            "props": 128,
+            "children": 123,
+            "div": 122,
+            "name": 102,
+            "expect": 100
+        },
+        "langs": {
+            "JavaScript": 15
+        },
+        "repos": {
+            "https://github.com/facebook/react": 11
+        }
+    },
+    "aylott@fb.com": {
+        "score": 0.9970860441146974,
+        "identifiers": {
+            "jasmine": 542,
+            "grunt": 421,
+            "require": 215,
+            "registerTask": 213,
+            "prototype": 192
+        },
+        "langs": {
+            "JavaScript": 54,
+            "HTML": 4
+        },
+        "repos": {
+            "https://github.com/facebook/react": 28
+        }
+    },
+    "sandermail@gmail.com": {
+        "score": 0.9968744063137952,
+        "identifiers": {
+            "node": 129,
+            "value": 119,
+            "expect": 110,
+            "toBe": 86,
+            "stub": 85
+        },
+        "langs": {
+            "JavaScript": 12
+        },
+        "repos": {
+            "https://github.com/facebook/react": 10
+        }
+    },
+    "bn@cs.stanford.edu": {
+        "score": 0.9942608294647002,
+        "identifiers": {
+            "jasmine": 589,
+            "require": 291,
+            "grunt": 262,
+            "prototype": 254,
+            "i": 159
+        },
+        "langs": {
+            "JavaScript": 75,
+            "HTML": 8
+        },
+        "repos": {
+            "https://github.com/facebook/react": 34
+        }
+    },
+    "joe.lencioni@airbnb.com": {
+        "score": 0.9899951423064908,
+        "identifiers": {
+            "t": 25,
+            "result": 10,
+            "test": 8,
+            "name": 7,
+            "exports": 5
+        },
+        "langs": {
+            "JavaScript": 7
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 10
+        }
+    },
+    "dannybd@fb.com": {
+        "score": 0.9870856654517202,
+        "identifiers": {
+            "require": 53,
+            "props": 31,
+            "log": 30,
+            "info": 28,
+            "propKey": 28
+        },
+        "langs": {
+            "JavaScript": 6
+        },
+        "repos": {
+            "https://github.com/facebook/react": 6
+        }
+    },
+    "jordojw@gmail.com": {
+        "score": 0.9869158537426324,
+        "identifiers": {
+            "container": 67,
+            "id": 39,
+            "ReactMount": 34,
+            "node": 32,
+            "require": 27
+        },
+        "langs": {
+            "JavaScript": 6
+        },
+        "repos": {
+            "https://github.com/facebook/react": 9
+        }
+    },
+    "clay.allsopp@gmail.com": {
+        "score": 0.9814544185957529,
+        "identifiers": {
+            "instance": 132,
+            "_testJournal": 74,
+            "props": 71,
+            "expect": 70,
+            "state": 52
+        },
+        "langs": {
+            "JavaScript": 5
+        },
+        "repos": {
+            "https://github.com/facebook/react": 6
+        }
+    },
+    "azich@fb.com": {
+        "score": 0.9811558055062559,
+        "identifiers": {
+            "MUST_USE_PROPERTY": 39,
+            "expect": 31,
+            "require": 31,
+            "toBe": 27,
+            "DOMPropertyOperations": 25
+        },
+        "langs": {
+            "JavaScript": 5
+        },
+        "repos": {
+            "https://github.com/facebook/react": 5
+        }
+    },
+    "8mayday@gmail.com": {
+        "score": 0.9810245762371719,
+        "identifiers": {
+            "MUST_USE_PROPERTY": 76,
+            "container": 59,
+            "id": 41,
+            "ReactMount": 34,
+            "testDocument": 28
+        },
+        "langs": {
+            "JavaScript": 5
+        },
+        "repos": {
+            "https://github.com/facebook/react": 5
+        }
+    },
+    "alexander@solovyov.net": {
+        "score": 0.9806983648670539,
+        "identifiers": {
+            "MUST_USE_ATTRIBUTE": 170,
+            "HAS_BOOLEAN_VALUE": 52,
+            "MUST_USE_PROPERTY": 52,
+            "require": 28,
+            "injection": 23
+        },
+        "langs": {
+            "JavaScript": 5
+        },
+        "repos": {
+            "https://github.com/facebook/react": 2
+        }
+    },
+    "njg57@cornell.edu": {
+        "score": 0.9710626880762708,
+        "identifiers": {
+            "transaction": 87,
+            "props": 77,
+            "ReactComponent": 55,
+            "Constructor": 51,
+            "SpecPolicy": 48
+        },
+        "langs": {
+            "JavaScript": 4
+        },
+        "repos": {
+            "https://github.com/facebook/react": 3
+        }
+    },
+    "isaac@fb.com": {
+        "score": 0.9707745919195464,
+        "identifiers": {
+            "topLevelTypes": 75,
+            "keyOf": 61,
+            "mountAt": 38,
+            "trapBubbledEvent": 38,
+            "eventTypes": 33
+        },
+        "langs": {
+            "JavaScript": 4
+        },
+        "repos": {
+            "https://github.com/facebook/react": 4
+        }
+    },
+    "harry.hull1@gmail.com": {
+        "score": 0.9496753631775063,
+        "identifiers": {
+            "name": 22,
+            "require": 20,
+            "Constructor": 19,
+            "SpecPolicy": 18,
+            "CompositeLifeCycle": 15
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/facebook/react": 3
+        }
+    },
+    "paulshen@fb.com": {
+        "score": 0.949460401994685,
+        "identifiers": {
+            "expect": 59,
+            "callback": 53,
+            "div": 44,
+            "mappedChildren": 31,
+            "toHaveBeenCalledWith": 28
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/facebook/react": 9
+        }
+    },
+    "jan.krems@groupon.com": {
+        "score": 0.9490625191773807,
+        "identifiers": {
+            "exports": 3,
+            "map": 3,
+            "module": 3,
+            "require": 3,
+            "resolve": 3
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 3
+        }
+    },
+    "l@lrowe.co.uk": {
+        "score": 0.9488704558557678,
+        "identifiers": {
+            "MUST_USE_ATTRIBUTE": 88,
+            "HAS_BOOLEAN_VALUE": 28,
+            "MUST_USE_PROPERTY": 24,
+            "injection": 11,
+            "DOMProperty": 10
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/facebook/react": 2
+        }
+    },
+    "adrienverge@gmail.com": {
+        "score": 0.9488042089757972,
+        "identifiers": {
+            "exports": 3,
+            "module": 3
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 1
+        }
+    },
+    "chrisngobanh@gmail.com": {
+        "score": 0.9488042089757972,
+        "identifiers": {
+            "exports": 3,
+            "module": 3
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 4
+        }
+    },
+    "geyser85@gmail.com": {
+        "score": 0.9488042089757972,
+        "identifiers": {
+            "exports": 3,
+            "module": 3
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 3
+        }
+    },
+    "stefano.pigozzi@gmail.com": {
+        "score": 0.9488042089757972,
+        "identifiers": {
+            "exports": 3,
+            "module": 3
+        },
+        "langs": {
+            "JavaScript": 3
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 2
+        }
+    },
+    "vjeux@fb.com": {
+        "score": 0.8962800490489468,
+        "identifiers": {
+            "instance": 71,
+            "expect": 35,
+            "React": 22,
+            "name": 22,
+            "toBe": 21
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 2
+        }
+    },
+    "keito@fb.com": {
+        "score": 0.8959123028586493,
+        "identifiers": {
+            "props": 22,
+            "React": 12,
+            "instance": 12,
+            "ReactTestUtils": 8,
+            "component": 8
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 5
+        }
+    },
+    "jkassens@fb.com": {
+        "score": 0.8957032087108444,
+        "identifiers": {
+            "props": 21,
+            "value": 14,
+            "i": 12,
+            "options": 12,
+            "multiple": 8
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 2
+        }
+    },
+    "evenfrosty@gmail.com": {
+        "score": 0.8949645741778767,
+        "identifiers": {
+            "exports": 2,
+            "map": 2,
+            "module": 2,
+            "require": 2,
+            "resolve": 2
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 2
+        }
+    },
+    "paul.seiffert@gmail.com": {
+        "score": 0.8947167778286601,
+        "identifiers": {
+            "object": 35,
+            "init": 20,
+            "Syntax": 19,
+            "type": 15,
+            "callee": 10
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 2
+        }
+    },
+    "jakubmal@gmail.com": {
+        "score": 0.8946676261120687,
+        "identifiers": {
+            "xhr": 22,
+            "transform": 16,
+            "code": 14,
+            "window": 14,
+            "script": 12
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 1
+        }
+    },
+    "amsardesai@gmail.com": {
+        "score": 0.894611415454602,
+        "identifiers": {
+            "exports": 2,
+            "module": 2
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 2
+        }
+    },
+    "simon@olofsson.de": {
+        "score": 0.894611415454602,
+        "identifiers": {
+            "exports": 2,
+            "module": 2
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 2
+        }
+    },
+    "thomasjshafer@gmail.com": {
+        "score": 0.894611415454602,
+        "identifiers": {
+            "exports": 2,
+            "module": 2
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/airbnb/javascript": 2
+        }
+    },
+    "floydophone@gmail.com": {
+        "score": 0.8945630641311636,
+        "identifiers": {
+            "constants": 10,
+            "rootIDs": 8,
+            "recast": 7,
+            "stmt": 7,
+            "ast": 6
+        },
+        "langs": {
+            "JavaScript": 2
+        },
+        "repos": {
+            "https://github.com/facebook/react": 149
+        }
+    },
+    "dmiladinov@wingspan.com": {
+        "score": 0.7092978629130287,
+        "identifiers": {
+            "name": 22,
+            "Constructor": 19,
+            "SpecPolicy": 18,
+            "CompositeLifeCycle": 15,
+            "transaction": 15
+        },
+        "langs": {
+            "JavaScript": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 1
+        }
+    },
+    "matti.nelimarkka@hiit.fi": {
+        "score": 0.7092745738832786,
+        "identifiers": {
+            "name": 22,
+            "Constructor": 20,
+            "SpecPolicy": 18,
+            "CompositeLifeCycle": 15,
+            "transaction": 15
+        },
+        "langs": {
+            "JavaScript": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 1
+        }
+    },
+    "vjeuxx@gmail.com": {
+        "score": 0.7086316016336465,
+        "identifiers": {
+            "require": 7,
+            "ReactMount": 6,
+            "ReactCompositeComponent": 3,
+            "React": 2,
+            "ReactComponent": 2
+        },
+        "langs": {
+            "JavaScript": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 48
+        }
+    },
+    "mroch@fb.com": {
+        "score": 0.7084536500113625,
+        "identifiers": {
+            "topLevelTypes": 11,
+            "topLevelType": 10,
+            "nativeEvent": 9,
+            "eventTypes": 8,
+            "keyOf": 7
+        },
+        "langs": {
+            "JavaScript": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 1
+        }
+    },
+    "owenc@fb.com": {
+        "score": 0.7084156789684364,
+        "identifiers": {
+            "keyOf": 61,
+            "eventTypes": 33,
+            "topLevelTypes": 32,
+            "bubbled": 30,
+            "captured": 30
+        },
+        "langs": {
+            "JavaScript": 1
+        },
+        "repos": {
+            "https://github.com/facebook/react": 1
+        }
+    }
+}
